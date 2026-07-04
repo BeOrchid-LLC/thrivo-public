@@ -1,6 +1,5 @@
 'use client';
 
-import { debounce } from '@/lib/utils/general';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSiteStore } from '@/lib/store/siteStore';
@@ -48,33 +47,25 @@ export const LoadAnimationScreen = () => {
   });
 
   useEffect(() => {
-    if (skipHeavySplash) {
-      const reducedMotion = prefersReducedMotion();
+    // A fixed delay, not a `window.load` listener: `load` fires once all
+    // resources (images, fonts, dev-mode HMR chunks) finish, which is both
+    // slow (conflicts with the site's own LCP budget) and unreliable here --
+    // in dev, Turbopack/Fast Refresh activity can delay or race past `load`
+    // entirely, leaving `pageLoaded` stuck `false` forever with the overlay
+    // still blocking the page (`pointer-events: auto`). A timer always fires.
+    const reducedMotion = prefersReducedMotion();
+    const loadTime = skipHeavySplash
+      ? reducedMotion
+        ? 0
+        : REPEAT_VISIT_LOAD_TIME
+      : BASE_LOAD_TIME;
 
-      void (async () => {
-        await debounce(reducedMotion ? 0 : REPEAT_VISIT_LOAD_TIME);
-        setPageLoaded(true);
-        markSplashSeenThisSession();
-      })();
-
-      return;
-    }
-
-    const handleLoad = async () => {
-      await debounce(BASE_LOAD_TIME);
+    const timer = setTimeout(() => {
       setPageLoaded(true);
       markSplashSeenThisSession();
-    };
+    }, loadTime);
 
-    if (document.readyState === 'complete') {
-      void handleLoad();
-    } else {
-      window.addEventListener('load', handleLoad);
-    }
-
-    return () => {
-      window.removeEventListener('load', handleLoad);
-    };
+    return () => clearTimeout(timer);
   }, [skipHeavySplash]);
 
   useEffect(() => {
