@@ -1,5 +1,6 @@
 import { MainLayout } from '@/components/layout/MainLayout';
 import { Hero } from './_sections/Hero';
+import { TrustBar } from './_sections/TrustBar';
 
 /**
  * Landing page. Remaining sections are built incrementally — see
@@ -10,6 +11,7 @@ export default function HomePage() {
   return (
     <MainLayout className="pt-[var(--header-height)]">
       <Hero />
+      <TrustBar />
     </MainLayout>
   );
 }

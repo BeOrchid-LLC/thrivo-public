@@ -73,6 +73,8 @@
     --gradient-heading: linear-gradient(169deg, hsl(146 59% 50%) 0%, hsl(145 63% 42%) 100%);
     --gradient-tint: linear-gradient(174deg, hsl(150 53% 94%) 0%, hsl(150 48% 89%) 100%);
     --gradient-tint-tile: linear-gradient(135deg, hsl(150 53% 94%) 0%, hsl(150 48% 89%) 100%);
+    /* Subtler full-width band wash (TrustBar) */
+    --gradient-tint-band: linear-gradient(174deg, hsl(150 50% 96%) 0%, hsl(150 53% 94%) 100%);
     --gradient-glow: radial-gradient(
       circle,
       hsl(145 63% 42% / 1) 0%,
@@ -198,6 +200,10 @@
 
   .bg-tint-tile {
     background-image: var(--gradient-tint-tile);
+  }
+
+  .bg-tint-band {
+    background-image: var(--gradient-tint-band);
   }
 
   /* Decorative radial green glow orbs (hero/CTA backgrounds) */

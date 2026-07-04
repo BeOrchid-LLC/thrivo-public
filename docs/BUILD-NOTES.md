@@ -17,7 +17,7 @@ sections themselves are **not built yet** — this file is the contract for that
    - `ui/accordion` — FAQ; `ui/switch` — pricing monthly/annual toggle
    - Type scale utilities in `globals.css`: `.text-display`, `.text-section-h2`, `.text-eyebrow`,
      `.text-body-lg`, `.text-card-title`, `.text-card-body`, `.text-fine`, `.gradient-text`,
-     `.bg-tint`, `.bg-tint-tile`, `.glow-orb`, `.card-surface`, `.card-interactive`
+     `.bg-tint`, `.bg-tint-tile`, `.bg-tint-band`, `.glow-orb`, `.card-surface`, `.card-interactive`
 2. **Every section fetches its own content — this is the standing pattern, not optional.**
    Copy and image URLs are modeled as if a CMS backend already owns them (none exists yet, but
    this is the seam for when one does). For a section named `X`:
@@ -52,7 +52,7 @@ sections themselves are **not built yet** — this file is the contract for that
 |---|---|---|
 | Nav | 144:458 | done — `components/layout/Header.tsx` |
 | Hero | 144:482 | done — `app/_sections/Hero.tsx` + `HeroView`/`HeroSkeleton` + `lib/content/hero.ts` (reference implementation of the content-fetching pattern in rule 2). Layout follows the reference screenshot, not Figma's exact positions; background glows are baked into `public/images/public-hero-bg.png` (no CSS glow-orb elements here) |
-| TrustBar | 144:513 | 4 stats: 5M+ foods, 160+ countries, 60 sec, $14.99 |
+| TrustBar | 144:513 | done — `app/_sections/TrustBar.tsx` + `TrustBarView`/`TrustBarSkeleton` + `lib/content/trust-bar.ts`. 4 stats: 5M+ foods, 160+ countries, 60 sec, $14.99 (accent orange). Full-bleed tint band (new `.bg-tint-band`), narrower vertical padding than `section-padding` |
 | ValueProp | 144:535 | eyebrow "Why Thrivo", checklist + 3 stacked feature cards |
 | Features | 144:601 | eyebrow "Features", 6-card grid (icon tile + title + body) |
 | AppPreview | 144:668 | phone mockups + "Outcomes, not gimmicks." |
