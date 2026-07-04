@@ -3,6 +3,7 @@ import { Hero } from './_sections/Hero';
 import { TrustBar } from './_sections/TrustBar';
 import { ValueProp } from './_sections/ValueProp';
 import { Features } from './_sections/Features';
+import { AppPreview } from './_sections/AppPreview';
 
 /**
  * Landing page. Remaining sections are built incrementally — see
@@ -16,6 +17,7 @@ export default function HomePage() {
       <TrustBar />
       <ValueProp />
       <Features />
+      <AppPreview />
     </MainLayout>
   );
 }
