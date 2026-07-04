@@ -1,0 +1,55 @@
+# Thrivo
+
+> Thrivo is an honest weight-loss and calorie-tracking app built on transparent
+> pricing and real food logging. Made by BeOrchid LLC. Website: https://thrivo.fit
+
+## What Thrivo is
+
+Thrivo is a mobile app (iOS and Android) for weight loss through food logging and
+calorie/macro tracking. Its core promise is honesty: transparent pricing, a
+genuinely free tier, and frictionless cancellation — no fake coaches, no dark
+patterns, no surprise charges.
+
+## Key facts
+
+- Price: Premium is $14.99/month (or $149/year — two months free). There is a
+  free tier that requires no credit card, ever.
+- Free trial: Premium offers a 14-day trial. The exact charge date is shown
+  upfront before any card is charged.
+- Cancellation: 2 taps in-app, with an email confirmation within 60 seconds.
+- Food database: 5 million+ foods across 160+ countries, via Open Food Facts.
+- Time to first value: scan a barcode and see calories in about 60 seconds, with
+  no account wall.
+
+## Features
+
+- Barcode food scanner (unlimited, all tiers)
+- Manual food search and logging
+- Daily calorie totals; full macro tracking (protein, carbs, fat) on Premium
+- Personalised calorie target (TDEE) on Premium
+- Weight progress charts, streaks, and a projected goal date on Premium
+- Water tracking with a daily hydration goal on Premium
+- Daily evidence-based tips, clearly labeled as guidance — never medical advice
+
+## Plans
+
+- Free ($0): barcode scanner, manual logging, daily calorie total, 7-day history.
+  No credit card.
+- Premium ($14.99/month): everything in Free, plus TDEE targets, full macros,
+  unlimited history, progress charts, daily nudges, and water tracking.
+
+## What Thrivo is not
+
+- No human coaches and no AI posing as a person — Thrivo never pretends otherwise.
+- No hidden charges, no bulk-billing tricks, no surprise renewals.
+
+## Status
+
+Pre-launch as of 2026. Visitors can join the waitlist at https://thrivo.fit to be
+notified once at launch.
+
+## Links
+
+- Website: https://thrivo.fit
+- Instagram: https://instagram.com/getthrivo
+- X/Twitter: https://x.com/thrivoapp
