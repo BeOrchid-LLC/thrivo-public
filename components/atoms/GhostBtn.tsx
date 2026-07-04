@@ -33,6 +33,7 @@ export const GhostBtn = ({
       size="icon"
       typo="custom"
       className={cn('p-0 flex-none', className)}
+      aria-label={srOnlyText}
       {...props}>
       {Icon ? (
         <i className={cn('text-2xl text-current', iconClass)}>

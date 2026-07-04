@@ -1,75 +1,87 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { ArrowRight, Menu } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import { ArrowRight, Menu, X } from 'lucide-react';
+import { AppLink } from '@/components/atoms/AppLink';
+import { GhostBtn } from '@/components/atoms/GhostBtn';
 import { Logo } from '@/components/atoms/Logo';
 import { NAV_LINKS } from '@/lib/constants/texts';
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { GhostBtn } from '@/components/atoms/GhostBtn';
 
 /**
- * Fixed public header from the Figma nav (node 144:458): logo left, anchor
- * links center, green "Get started" pill right. Collapses to a sheet on mobile.
+ * Structure/UX ported from oj-multimedia's Header (fixed bar, `container mx-auto
+ * px-4`, `lg:` desktop breakpoint, inline expanding mobile panel instead of a
+ * side drawer). Content — logo, nav labels, CTA styling — matches the Figma
+ * nav (node 144:458): dark-green pill CTA, uppercase wordmark, no nav icons.
  */
 export const Header = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const getStartedBtn = (
-    <Link
+    <AppLink
       href="#get-started"
-      className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors duration-300 hover:bg-primary/90 active:bg-primary-active">
+      onClick={() => setIsMenuOpen(false)}
+      className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-[10px] bg-primary-active px-5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-primary-active/90 lg:w-fit">
       Get started
       <ArrowRight className="size-3.5" aria-hidden />
-    </Link>
+    </AppLink>
   );
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 h-[var(--header-height)] border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="regular-container flex h-full items-center justify-between gap-4">
-        <Logo />
+    <header
+      className="fixed top-0 right-0 left-0 z-50 border-b border-border bg-background/90 backdrop-blur-md"
+      style={{ height: 'var(--header-height)' }}>
+      <div className="container mx-auto h-full px-4">
+        <div className="flex h-full items-center justify-between">
+          <Logo textClassName="text-base uppercase tracking-normal" />
 
-        <nav
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex"
-          aria-label="Main">
-          {NAV_LINKS.map(link => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-foreground">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
+            {NAV_LINKS.map(link => (
+              <AppLink
+                key={link.href}
+                href={link.href}
+                className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:bg-muted hover:text-foreground">
+                {link.label}
+              </AppLink>
+            ))}
+          </nav>
 
-        <div className="hidden md:block">{getStartedBtn}</div>
+          <div className="flex items-center gap-2">
+            <div className="hidden lg:block">{getStartedBtn}</div>
 
-        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-          <SheetTrigger asChild>
             <GhostBtn
-              LucideIcon={Menu}
-              iconClass="size-6"
-              srOnlyText="Open menu"
-              className="md:hidden touch-hit"
+              LucideIcon={isMenuOpen ? X : Menu}
+              iconClass="size-5"
+              srOnlyText={isMenuOpen ? 'Close menu' : 'Open menu'}
+              className="rounded-full touch-hit lg:hidden"
+              onClick={() => setIsMenuOpen(prev => !prev)}
             />
-          </SheetTrigger>
-          <SheetContent side="right" className="w-72 p-6">
-            <SheetTitle className="sr-only">Menu</SheetTitle>
-            <div className="mt-8 flex flex-col gap-6">
+          </div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="border-b border-border bg-background lg:hidden">
+            <nav className="container mx-auto flex flex-col gap-2 px-4 py-4" aria-label="Main">
               {NAV_LINKS.map(link => (
-                <Link
+                <AppLink
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-base font-medium text-foreground transition-colors hover:text-primary">
+                  onClick={() => setIsMenuOpen(false)}
+                  className="rounded-xl px-4 py-3 text-base font-medium text-muted-foreground transition-colors duration-200 hover:bg-muted hover:text-foreground">
                   {link.label}
-                </Link>
+                </AppLink>
               ))}
-              <div onClick={() => setMobileOpen(false)}>{getStartedBtn}</div>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </div>
+              <div className="mt-2 border-t border-border pt-2">{getStartedBtn}</div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
