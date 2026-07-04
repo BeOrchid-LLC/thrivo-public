@@ -66,7 +66,7 @@ export function Logo({
       {showText && (
         <span
           className={cn(
-            'font-display font-bold text-xl lowercase text-foreground',
+            'font-display font-bold text-xl uppercase text-foreground',
             textClasses,
             textClassName
           )}>
