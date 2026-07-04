@@ -1,0 +1,74 @@
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
+import reactHooks from 'eslint-plugin-react-hooks';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+
+const eslintConfig = [
+  {
+    ignores: [
+      '.next/**',
+      'out/**',
+      'build/**',
+      'next-env.d.ts',
+      'node_modules/**',
+      '**/*.config.ts',
+      '**/*.config.js',
+      '**/*.config.mjs',
+      '**/*.js',
+      'scripts/**',
+    ],
+  },
+  ...nextCoreWebVitals,
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      prettier,
+      'react-hooks': reactHooks,
+    },
+    rules: {
+      ...prettierConfig.rules,
+      ...reactHooks.configs.recommended.rules,
+      'react-hooks/set-state-in-effect': 'off',
+      'prettier/prettier': [
+        'error',
+        {
+          arrowParens: 'avoid',
+          bracketSameLine: true,
+          bracketSpacing: true,
+          singleQuote: true,
+          trailingComma: 'es5',
+          semi: true,
+          jsxSingleQuote: false,
+          printWidth: 100,
+          tabWidth: 2,
+          endOfLine: 'auto',
+        },
+      ],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'framer-motion',
+              message: 'Use motion/react (package "motion") instead of framer-motion.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+];
+
+export default eslintConfig;

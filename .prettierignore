@@ -1,0 +1,24 @@
+node_modules
+.next
+out
+build
+dist
+*.md
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Config files
+.prettierrc
+components.json
+next-env.d.ts
+*.mjs
+*.config.ts
+tsconfig.json
+*.webmanifest
+*.code-workspace
+
+# CSS files
+app/globals.css
+
+*.json
