@@ -31,7 +31,7 @@ sections themselves are **not built yet** — this file is the contract for that
 | Section | Node | Notes |
 |---|---|---|
 | Nav | 144:458 | done — `components/layout/Header.tsx` |
-| Hero | 144:482 | h1 56px w/ green gradient "without", badge, store buttons, phone mockup, glow orbs |
+| Hero | 144:482 | done — `app/_sections/Hero.tsx`. Layout follows the reference screenshot, not Figma's exact positions; background glows are baked into `public/images/public-hero-bg.png` (no CSS glow-orb elements here) |
 | TrustBar | 144:513 | 4 stats: 5M+ foods, 160+ countries, 60 sec, $14.99 |
 | ValueProp | 144:535 | eyebrow "Why Thrivo", checklist + 3 stacked feature cards |
 | Features | 144:601 | eyebrow "Features", 6-card grid (icon tile + title + body) |
