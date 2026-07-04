@@ -10,7 +10,7 @@ export function organizationJsonLd(): JsonLdObject {
     '@type': 'Organization',
     name: 'BeOrchid LLC',
     url: liveUrl,
-    logo: `${liveUrl}/logo.svg`,
+    logo: `${liveUrl}/favicon.png`,
   };
 }
 
