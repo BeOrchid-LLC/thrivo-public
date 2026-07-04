@@ -9,6 +9,8 @@ const SPLASH_SEEN_SESSION_KEY = 'thrivo-splash-seen';
 const BASE_LOAD_TIME = 800;
 const REPEAT_VISIT_LOAD_TIME = 200;
 const TRANSITION_DURATION = 0.6;
+/** Safety net: force-dismiss even if `load` never fires (see the effect below). */
+const MAX_WAIT_TIME = 3000;
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -31,8 +33,9 @@ function markSplashSeenThisSession(): void {
 }
 
 /**
- * Branded splash gate. Sets siteLoading=false when done so FadeInUp wrappers
- * (MotionContainers) start animating only after the splash clears.
+ * Branded splash gate (pattern matches oj-multimedia's LoadAnimationScreen).
+ * Sets siteLoading=false when done so FadeInUp wrappers (MotionContainers)
+ * start animating only after the splash clears.
  */
 export const LoadAnimationScreen = () => {
   const {
@@ -47,33 +50,44 @@ export const LoadAnimationScreen = () => {
   });
 
   useEffect(() => {
-    // A fixed delay, not a `window.load` listener: `load` fires once all
-    // resources (images, fonts, dev-mode HMR chunks) finish, which is both
-    // slow (conflicts with the site's own LCP budget) and unreliable here --
-    // in dev, Turbopack/Fast Refresh activity can delay or race past `load`
-    // entirely, leaving `pageLoaded` stuck `false` forever with the overlay
-    // still blocking the page (`pointer-events: auto`). A timer always fires.
-    const reducedMotion = prefersReducedMotion();
-    const loadTime = skipHeavySplash
-      ? reducedMotion
-        ? 0
-        : REPEAT_VISIT_LOAD_TIME
-      : BASE_LOAD_TIME;
-
-    const timer = setTimeout(() => {
+    const finish = () => {
       setPageLoaded(true);
       markSplashSeenThisSession();
-    }, loadTime);
+    };
 
-    return () => clearTimeout(timer);
-  }, [skipHeavySplash]);
-
-  useEffect(() => {
-    if (pageLoaded && siteLoading) {
-      const timer = setTimeout(() => setSiteLoading(false), TRANSITION_DURATION * 1000);
+    if (skipHeavySplash) {
+      const reducedMotion = prefersReducedMotion();
+      const timer = setTimeout(finish, reducedMotion ? 0 : REPEAT_VISIT_LOAD_TIME);
       return () => clearTimeout(timer);
     }
-  }, [pageLoaded, siteLoading, setSiteLoading]);
+
+    // `load` normally fires once (fonts/images finish); the max-wait timer is
+    // a safety net for when it doesn't -- e.g. in dev, Turbopack/Fast Refresh
+    // activity can keep `document.readyState` from settling or race past the
+    // event entirely, which previously left the overlay stuck blocking the
+    // page (pointer-events: auto) forever with nothing to recover it.
+    let settled = false;
+    const settleOnce = () => {
+      if (settled) return;
+      settled = true;
+      finish();
+    };
+
+    const handleLoad = () => setTimeout(settleOnce, BASE_LOAD_TIME);
+
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+    }
+
+    const maxWaitTimer = setTimeout(settleOnce, MAX_WAIT_TIME);
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(maxWaitTimer);
+    };
+  }, [skipHeavySplash]);
 
   return (
     <AnimatePresence>
@@ -83,6 +97,9 @@ export const LoadAnimationScreen = () => {
           animate={{ opacity: pageLoaded ? 0 : 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: TRANSITION_DURATION, ease: 'easeOut' }}
+          onAnimationComplete={() => {
+            if (pageLoaded) setSiteLoading(false);
+          }}
           className="fixed inset-0 z-[100] grid place-items-center bg-background"
           style={{ pointerEvents: pageLoaded ? 'none' : 'auto' }}
           aria-hidden>
