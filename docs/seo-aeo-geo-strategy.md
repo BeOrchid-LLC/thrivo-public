@@ -56,7 +56,8 @@ re-run Lighthouse on every deploy that touches the page.
   (`max-image-preview:large`, `max-snippet:-1`), `theme-color`.
 - **`app/opengraph-image.tsx`** — generated 1200×630 social card (next/og),
   statically rendered. Reused for Twitter.
-- **`app/manifest.ts`** — PWA manifest; **`app/icon.svg`** — favicon.
+- **`app/manifest.ts`** — PWA manifest; favicon served from `public/favicon.png` via
+  `metadata.icons` (`lib/constants/texts.ts`).
 - **Core Web Vitals** — `next/font` (Inter, no layout shift), `next/image` with
   explicit dimensions (no CLS), LCP hero text rendered statically (not behind a
   scroll/JS animation), below-the-fold animations only. Keep the client bundle
@@ -150,7 +151,10 @@ correct facts.
   etc. (Flip an individual agent to `disallow` if policy ever requires it.)
 - **Quotable, statistic-rich, unambiguous claims** — generative models prefer
   text they can lift verbatim with a number attached ("$14.99/month", "160+
-  countries", "cancel in 2 taps, email in 60 seconds").
+  countries", "cancel in 2 taps"). Only use a specific number where there's a
+  real SLA or measurement behind it — don't invent precision (see
+  `public/llms.txt` history: a "60 seconds" email-confirmation claim and a
+  "$149/year" price were both unverified/stale and had to be corrected).
 - **Strong entity clarity** — consistent definition + `Organization`/`sameAs`
   schema so models bind the facts to the "Thrivo" entity.
 
@@ -217,7 +221,7 @@ sources. Priorities post-launch:
 | All copy, FAQ, plans (drives AEO answers + JSON-LD) | `lib/content.ts` |
 | Structured data graph | `lib/jsonld.ts`, `components/seo/JsonLd.tsx` |
 | Metadata, OG/Twitter, robots directives | `app/layout.tsx` |
-| Sitemap / robots / manifest / OG image / favicon | `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`, `app/opengraph-image.tsx`, `app/icon.svg` |
+| Sitemap / robots / manifest / OG image / favicon | `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`, `app/opengraph-image.tsx`, `public/favicon.png` |
 | GEO brief + AI-crawler policy | `public/llms.txt`, `app/robots.ts` |
 
 > Because copy and FAQ live in `lib/content.ts`, editing the FAQ updates the

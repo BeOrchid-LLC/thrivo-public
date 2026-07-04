@@ -49,3 +49,8 @@ sections themselves are **not built yet** — this file is the contract for that
 - Performance budget scripts (`lighthouse-budget.json`, `performance-budgets.json` +
   `checks:performance`) — port from oj-multimedia at the NFR pass.
 - SEO/AEO/GEO follow-ups per `docs/seo-aeo-geo-strategy.md` (llms.txt already in `public/`).
+- **Social handles**: no real accounts exist yet, so `public/llms.txt` has no Links/social
+  section and the footer's `SOCIAL_LINKS` (`lib/constants/texts.ts`) point at unverified
+  handle/platform guesses. Once accounts are created, add the real handles to **both**
+  files and double check which handle is on which platform in each — the two previously
+  disagreed with each other (neither was ever verified).

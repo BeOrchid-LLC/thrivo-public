@@ -12,14 +12,14 @@ patterns, no surprise charges.
 
 ## Key facts
 
-- Price: Premium is $14.99/month (or $149/year — two months free). There is a
-  free tier that requires no credit card, ever.
+- Price: Premium is $14.99/month (or $150/year — about two months free).
+  There is a free tier that requires no credit card, ever.
 - Free trial: Premium offers a 14-day trial. The exact charge date is shown
   upfront before any card is charged.
-- Cancellation: 2 taps in-app, with an email confirmation within 60 seconds.
+- Cancellation: 2 taps in-app, with an instant email confirmation.
 - Food database: 5 million+ foods across 160+ countries, via Open Food Facts.
-- Time to first value: scan a barcode and see calories in about 60 seconds, with
-  no account wall.
+- Time to first value: about 60 seconds from opening the app to logging your
+  first food. Barcode scanning has no pay wall — it's free on every tier.
 
 ## Features
 
@@ -51,5 +51,3 @@ notified once at launch.
 ## Links
 
 - Website: https://thrivo.fit
-- Instagram: https://instagram.com/getthrivo
-- X/Twitter: https://x.com/thrivoapp
