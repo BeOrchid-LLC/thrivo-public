@@ -13,8 +13,10 @@ export interface SectionHeaderProps {
 }
 
 /**
- * Marketing section header from the Figma landing page: eyebrow (12px bold
- * uppercase green) + extrabold h2 (42px) + muted supporting paragraph.
+ * Marketing section header from the Figma landing page (ValueProp, node
+ * 144:537): eyebrow (12px bold uppercase green) + extrabold h2 (42px) +
+ * subtle-foreground supporting paragraph (16px). Reused by every section
+ * that has this eyebrow/heading/subtext shape.
  */
 export const SectionHeader = ({
   eyebrow,
@@ -26,14 +28,10 @@ export const SectionHeader = ({
 }: SectionHeaderProps) => {
   return (
     <div
-      className={cn(
-        'flex flex-col gap-4',
-        align === 'center' && 'items-center text-center',
-        className
-      )}>
+      className={cn('flex flex-col', align === 'center' && 'items-center text-center', className)}>
       {eyebrow && <p className="text-eyebrow">{eyebrow}</p>}
-      <h2 className={cn('text-section-h2', headingClassName)}>{heading}</h2>
-      {subtext && <div className="text-body-lg max-w-xl">{subtext}</div>}
+      <h2 className={cn('text-section-h2', eyebrow && 'mt-4', headingClassName)}>{heading}</h2>
+      {subtext && <div className="text-section-subtext mt-6 max-w-xl">{subtext}</div>}
     </div>
   );
 };
