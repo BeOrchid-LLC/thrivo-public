@@ -2,6 +2,7 @@ import { MainLayout } from '@/components/layout/MainLayout';
 import { Hero } from './_sections/Hero';
 import { TrustBar } from './_sections/TrustBar';
 import { ValueProp } from './_sections/ValueProp';
+import { Features } from './_sections/Features';
 
 /**
  * Landing page. Remaining sections are built incrementally — see
@@ -14,6 +15,7 @@ export default function HomePage() {
       <Hero />
       <TrustBar />
       <ValueProp />
+      <Features />
     </MainLayout>
   );
 }

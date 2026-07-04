@@ -5,6 +5,8 @@ import { ReactNode } from 'react';
 
 export interface SectionContainerProps {
   children: ReactNode;
+  /** Forwarded to the outer <section> -- e.g. an anchor-nav target like "features". */
+  id?: string;
   className?: string;
   containerClassName?: string;
   background?: 'default' | 'muted' | 'primary';
@@ -13,7 +15,8 @@ export interface SectionContainerProps {
 
 const backgroundClasses = {
   default: '',
-  muted: 'bg-muted/30',
+  // Full-opacity #F4F6F9 alternate section bg from the Figma design (Features, node 144:601).
+  muted: 'bg-muted',
   primary: 'bg-primary text-primary-foreground',
 };
 
@@ -22,13 +25,16 @@ const backgroundClasses = {
  */
 export const SectionContainer = ({
   children,
+  id,
   className,
   containerClassName,
   background = 'default',
   customContainer = false,
 }: SectionContainerProps) => {
   return (
-    <section className={cn('w-full section-padding', backgroundClasses[background], className)}>
+    <section
+      id={id}
+      className={cn('w-full section-padding', backgroundClasses[background], className)}>
       <div
         className={cn(
           customContainer ? 'container-custom' : 'regular-container',

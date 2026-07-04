@@ -79,6 +79,12 @@
     --gradient-tint-band: linear-gradient(174deg, hsl(150 50% 96%) 0%, hsl(150 53% 94%) 100%);
     /* Faint card-cluster panel wash (ValueProp) */
     --gradient-tint-panel: linear-gradient(158deg, hsl(150 38% 97%) 0%, hsl(150 38% 95%) 100%);
+    /* Orange icon-tile variant for accent-themed cards (Features "Transparent subscription") */
+    --gradient-tint-tile-accent: linear-gradient(
+      135deg,
+      hsl(37 90% 51% / 0.07) 0%,
+      hsl(37 90% 51% / 0.22) 100%
+    );
     --gradient-glow: radial-gradient(
       circle,
       hsl(145 63% 42% / 1) 0%,
@@ -210,6 +216,10 @@
 
   .bg-tint-tile {
     background-image: var(--gradient-tint-tile);
+  }
+
+  .bg-tint-tile-accent {
+    background-image: var(--gradient-tint-tile-accent);
   }
 
   .bg-tint-band {
