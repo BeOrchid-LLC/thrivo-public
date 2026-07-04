@@ -18,12 +18,32 @@ sections themselves are **not built yet** — this file is the contract for that
    - Type scale utilities in `globals.css`: `.text-display`, `.text-section-h2`, `.text-eyebrow`,
      `.text-body-lg`, `.text-card-title`, `.text-card-body`, `.text-fine`, `.gradient-text`,
      `.bg-tint`, `.bg-tint-tile`, `.glow-orb`, `.card-surface`, `.card-interactive`
-2. Sections live in `app/_sections/` (oj naming: `SectionName.tsx`), composed in `app/page.tsx`
-   inside `MainLayout`, each wrapped in `<Suspense>` with a skeleton fallback where data-driven.
-3. Section copy goes in `lib/constants/texts.ts` — no copy hardcoded inside section components.
-4. Anchor targets: `#features`, `#pricing`, `#faq`, `#get-started` (header/nav already links to
+2. **Every section fetches its own content — this is the standing pattern, not optional.**
+   Copy and image URLs are modeled as if a CMS backend already owns them (none exists yet, but
+   this is the seam for when one does). For a section named `X`:
+   - `lib/content/X.ts` — `XContent` type, `X_CONTENT_FALLBACK` (today's hardcoded copy/image
+     paths), and `getXContent = cache(() => fetchSectionContent('x', async () => { ...
+     TODO(cms): real fetch goes here ...; return X_CONTENT_FALLBACK; }))`. See
+     `lib/content/hero.ts` for the reference shape and `lib/content/fetch-content.ts` for the
+     shared seam (logs, then re-throws, so failures are catchable).
+   - `app/_sections/XView.tsx` — presentational, pure function of a `content: XContent` prop.
+     Never imports the content loader itself.
+   - `app/_sections/XSkeleton.tsx` — loading placeholder shaped like `XView` (same section
+     classes/grid) so nothing shifts when real content swaps in.
+   - `app/_sections/X.tsx` — the exported section. A non-async `XData()` calls
+     `use(getXContent())` (React's `use` hook — not `useEffect`/`useState`) and renders
+     `<XView content={content} />`; the exported `X` wraps `<XData />` in `<Suspense
+     fallback={<XSkeleton />}>` inside a `<SectionErrorBoundary section="x" fallback={<XView
+     content={X_CONTENT_FALLBACK} />}>` (`components/general/SectionErrorBoundary.tsx`). A
+     failed fetch degrades to that section's own fallback copy — quietly, no error banner —
+     rather than breaking the page. See `app/_sections/Hero.tsx` as the reference.
+   - Only per-section marketing copy/images go through this pipeline. Site-wide chrome
+     (`NAV_LINKS`, `FOOTER_LINKS`, `SOCIAL_LINKS`, `SEO_DETAILS` in `lib/constants/texts.ts`)
+     is intentionally NOT part of it — header/footer render synchronously, no Suspense/loading
+     state for nav chrome. Revisit if that should change.
+3. Anchor targets: `#features`, `#pricing`, `#faq`, `#get-started` (header/nav already links to
    these). Add `scroll-mt-header` to each target section.
-5. FAQ section must render `faqJsonLd()` (see `lib/jsonld.ts`) via `<JsonLd />`; the page should
+4. FAQ section must render `faqJsonLd()` (see `lib/jsonld.ts`) via `<JsonLd />`; the page should
    also include `organizationJsonLd()` + `websiteJsonLd()` + `mobileAppJsonLd()`.
 
 ## Section inventory (Figma node IDs)
@@ -31,7 +51,7 @@ sections themselves are **not built yet** — this file is the contract for that
 | Section | Node | Notes |
 |---|---|---|
 | Nav | 144:458 | done — `components/layout/Header.tsx` |
-| Hero | 144:482 | done — `app/_sections/Hero.tsx`. Layout follows the reference screenshot, not Figma's exact positions; background glows are baked into `public/images/public-hero-bg.png` (no CSS glow-orb elements here) |
+| Hero | 144:482 | done — `app/_sections/Hero.tsx` + `HeroView`/`HeroSkeleton` + `lib/content/hero.ts` (reference implementation of the content-fetching pattern in rule 2). Layout follows the reference screenshot, not Figma's exact positions; background glows are baked into `public/images/public-hero-bg.png` (no CSS glow-orb elements here) |
 | TrustBar | 144:513 | 4 stats: 5M+ foods, 160+ countries, 60 sec, $14.99 |
 | ValueProp | 144:535 | eyebrow "Why Thrivo", checklist + 3 stacked feature cards |
 | Features | 144:601 | eyebrow "Features", 6-card grid (icon tile + title + body) |

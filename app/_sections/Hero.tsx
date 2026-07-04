@@ -1,60 +1,26 @@
-import Image from 'next/image';
-import { BadgeCheck } from 'lucide-react';
-import { EyebrowBadge } from '@/components/atoms/EyebrowBadge';
-import { StoreButtons } from '@/components/atoms/StoreButtons';
-import { HERO_CONTENT } from '@/lib/constants/texts';
+import { Suspense, use } from 'react';
+import { SectionErrorBoundary } from '@/components/general/SectionErrorBoundary';
+import { getHeroContent, HERO_CONTENT_FALLBACK } from '@/lib/content/hero';
+import { HeroView } from './HeroView';
+import { HeroSkeleton } from './HeroSkeleton';
+
+/** Suspends on the content promise via `use()` -- no useEffect/useState fetch. */
+function HeroData() {
+  const content = use(getHeroContent());
+  return <HeroView content={content} />;
+}
 
 /**
- * Hero (Figma node 144:482). Layout/composition follows the reference
- * screenshot (two columns, dashboard mockup right); styling values (colors,
- * type scale, spacing) come from Figma. The decorative glows are baked into
- * public/images/public-hero-bg.png rather than built with CSS gradients.
+ * Section entry point: Suspense shows a skeleton while content resolves;
+ * SectionErrorBoundary catches a failed fetch and degrades to the section's
+ * own hardcoded fallback copy instead of taking down the page.
  */
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden py-20 lg:flex lg:min-h-[708px] lg:items-center lg:py-0">
-      <Image
-        src="/images/public-hero-bg.png"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
-
-      <div className="regular-container relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
-        <div className="max-w-[448px]">
-          <EyebrowBadge icon={<BadgeCheck className="size-3" aria-hidden />} withDot>
-            {HERO_CONTENT.eyebrow}
-          </EyebrowBadge>
-
-          <h1 className="text-display mt-6">
-            {HERO_CONTENT.headingLine1}
-            <br />
-            <span className="gradient-text">{HERO_CONTENT.headingHighlight}</span>{' '}
-            {HERO_CONTENT.headingLine2Rest}
-            <br />
-            {HERO_CONTENT.headingLine3}
-          </h1>
-
-          <p className="text-body-lg mt-6">{HERO_CONTENT.paragraph}</p>
-
-          <StoreButtons className="mt-8" />
-
-          <p className="text-fine mt-6">{HERO_CONTENT.finePrint}</p>
-        </div>
-
-        <div className="flex justify-center lg:justify-end">
-          <Image
-            src="/images/mobile-dashboard.png"
-            alt={HERO_CONTENT.dashboardAlt}
-            width={227}
-            height={492}
-            priority
-            className="h-auto w-full max-w-[227px]"
-          />
-        </div>
-      </div>
-    </section>
+    <SectionErrorBoundary section="hero" fallback={<HeroView content={HERO_CONTENT_FALLBACK} />}>
+      <Suspense fallback={<HeroSkeleton />}>
+        <HeroData />
+      </Suspense>
+    </SectionErrorBoundary>
   );
 };

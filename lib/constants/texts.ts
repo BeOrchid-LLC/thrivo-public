@@ -35,17 +35,6 @@ export const SEO_DETAILS = {
   classification: 'Weight loss and nutrition tracking app',
 } as const;
 
-export const HERO_CONTENT = {
-  eyebrow: 'Honest. Simple. Effective.',
-  headingLine1: 'Weight loss',
-  headingHighlight: 'without',
-  headingLine2Rest: 'the',
-  headingLine3: 'nonsense.',
-  paragraph: 'Simple tools to help you stay consistent — without the overwhelm.',
-  finePrint: 'Free tier available — no credit card required.',
-  dashboardAlt: 'Thrivo app dashboard showing daily calories, macro progress, and water intake',
-} as const;
-
 export const NAV_LINKS = [
   { label: 'Features', href: '#features' },
   { label: 'Pricing', href: '#pricing' },
