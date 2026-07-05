@@ -4,19 +4,17 @@ import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useInitSiteStore } from '@/lib/store/siteStore';
 
-const LoadAnimationScreenLazy = dynamic(
-  () => import('./LoadAnimationScreen').then(module => ({ default: module.LoadAnimationScreen })),
-  { ssr: false }
+// ssr: false would exclude the overlay from the server-sent HTML, letting the
+// real page paint first and the splash cover it in afterward — SSR it instead
+// so the overlay is already in the initial markup.
+const LoadAnimationScreenLazy = dynamic(() =>
+  import('./LoadAnimationScreen').then(module => ({ default: module.LoadAnimationScreen }))
 );
 
 function isSplashEnabled(): boolean {
-  const flag = process.env.NEXT_PUBLIC_ENABLE_SPLASH;
-
-  if (flag === 'true') return true;
-  if (flag === 'false') return false;
-
-  // Production defaults off to protect LCP/INP; dev keeps the branded splash unless opted out.
-  return process.env.NODE_ENV !== 'production';
+  // Off by default in every environment (protects LCP/INP and matches prod
+  // behavior in dev) — opt in explicitly via NEXT_PUBLIC_ENABLE_SPLASH=true.
+  return process.env.NEXT_PUBLIC_ENABLE_SPLASH === 'true';
 }
 
 function ClearSiteLoadingOnMount() {
