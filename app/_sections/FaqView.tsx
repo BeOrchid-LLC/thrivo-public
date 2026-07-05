@@ -1,6 +1,11 @@
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/ui/accordion';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { faqJsonLd } from '@/lib/jsonld';
 import type { FaqContent, FaqQuestion } from '@/lib/content/faq';

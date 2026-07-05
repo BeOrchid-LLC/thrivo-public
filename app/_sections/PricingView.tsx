@@ -18,7 +18,11 @@ function PricingCard({ plan, billingCycle }: { plan: PricingPlan; billingCycle: 
   const variant = plan[billingCycle];
   // Premium's secondary-text tone: muted (#F4F6F9) on the flat monthly green,
   // but white/60 once the darker annual gradient is in play (node 155:1430).
-  const mutedTone = highlighted ? (isAnnual ? 'text-white/60' : 'text-muted') : 'text-subtle-foreground';
+  const mutedTone = highlighted
+    ? isAnnual
+      ? 'text-white/60'
+      : 'text-muted'
+    : 'text-subtle-foreground';
 
   return (
     <div
@@ -74,18 +78,24 @@ function PricingCard({ plan, billingCycle }: { plan: PricingPlan; billingCycle: 
 
         {variant.billingDetail && (
           <p className="mt-1 text-[13px] text-white/80">
-            {variant.billingDetail.label} <span className="font-bold text-white">{variant.billingDetail.amount}</span>
+            {variant.billingDetail.label}{' '}
+            <span className="font-bold text-white">{variant.billingDetail.amount}</span>
           </p>
         )}
 
-        {variant.savingsNote && <p className="mt-0.5 text-xs text-white/50">{variant.savingsNote}</p>}
+        {variant.savingsNote && (
+          <p className="mt-0.5 text-xs text-white/50">{variant.savingsNote}</p>
+        )}
       </div>
 
       <ul className="relative flex flex-1 flex-col gap-3 pb-8">
         {variant.features.map(feature => (
           <li key={feature} className="flex items-start gap-3">
             <Check
-              className={cn('mt-0.5 size-3.5 shrink-0', highlighted ? 'text-white' : 'text-primary')}
+              className={cn(
+                'mt-0.5 size-3.5 shrink-0',
+                highlighted ? 'text-white' : 'text-primary'
+              )}
               aria-hidden
             />
             <span className={cn('text-sm', highlighted ? 'text-white/90' : 'text-foreground/85')}>
@@ -136,7 +146,10 @@ export function PricingView({ content }: { content: PricingContent }) {
 
         <div className="mt-8 flex items-center gap-4">
           <span
-            className={cn('text-sm font-semibold', isAnnual ? 'text-muted-foreground' : 'text-foreground')}>
+            className={cn(
+              'text-sm font-semibold',
+              isAnnual ? 'text-muted-foreground' : 'text-foreground'
+            )}>
             {content.monthlyLabel}
           </span>
           <Switch
