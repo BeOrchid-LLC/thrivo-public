@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 
@@ -11,6 +12,8 @@ export interface SectionContainerProps {
   containerClassName?: string;
   background?: 'default' | 'muted' | 'primary';
   customContainer?: boolean;
+  /** Full-bleed background image behind the container (e.g. CTA's baked-in glow, node 144:855). */
+  backgroundImageSrc?: string;
 }
 
 const backgroundClasses = {
@@ -30,11 +33,27 @@ export const SectionContainer = ({
   containerClassName,
   background = 'default',
   customContainer = false,
+  backgroundImageSrc,
 }: SectionContainerProps) => {
   return (
     <section
       id={id}
-      className={cn('w-full section-padding', backgroundClasses[background], className)}>
+      className={cn(
+        'w-full section-padding',
+        backgroundImageSrc && 'relative overflow-hidden',
+        backgroundClasses[background],
+        className
+      )}>
+      {backgroundImageSrc && (
+        <Image
+          src={backgroundImageSrc}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="absolute inset-0 -z-10 object-cover"
+        />
+      )}
       <div
         className={cn(
           customContainer ? 'container-custom' : 'regular-container',

@@ -2,8 +2,13 @@ import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface SectionHeaderProps {
-  /** Small uppercase eyebrow above the heading (e.g. "Features", "Pricing"). */
-  eyebrow?: string;
+  /**
+   * Small caption above the heading. A plain string renders as the usual
+   * uppercase text eyebrow (e.g. "Features", "Pricing"); pass a node (e.g.
+   * `<EyebrowBadge variant="solid">`) for a pill-style caption like CTA's
+   * "Launching soon" badge instead.
+   */
+  eyebrow?: ReactNode;
   heading: string;
   /** Supporting copy under the heading. */
   subtext?: ReactNode;
@@ -29,7 +34,8 @@ export const SectionHeader = ({
   return (
     <div
       className={cn('flex flex-col', align === 'center' && 'items-center text-center', className)}>
-      {eyebrow && <p className="text-eyebrow">{eyebrow}</p>}
+      {eyebrow &&
+        (typeof eyebrow === 'string' ? <p className="text-eyebrow">{eyebrow}</p> : eyebrow)}
       <h2 className={cn('text-section-h2', eyebrow && 'mt-4', headingClassName)}>{heading}</h2>
       {subtext && <div className="text-section-subtext mt-6 max-w-xl">{subtext}</div>}
     </div>
