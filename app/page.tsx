@@ -8,6 +8,7 @@ import { Features } from './_sections/Features';
 import { AppPreview } from './_sections/AppPreview';
 import { Pricing } from './_sections/Pricing';
 import { Faq } from './_sections/Faq';
+import { Cta } from './_sections/Cta';
 
 /**
  * Landing page. Remaining sections are built incrementally — see
@@ -26,6 +27,7 @@ export default function HomePage() {
       <AppPreview />
       <Pricing />
       <Faq />
+      <Cta />
     </MainLayout>
   );
 }
