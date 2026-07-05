@@ -8,7 +8,7 @@ import { COPYRIGHT, FOOTER_LINKS, SOCIAL_LINKS } from '@/lib/constants/texts';
  */
 export const Footer = () => {
   return (
-    <footer className="border-t border-border bg-background">
+    <footer className="border-t border-border bg-muted">
       <div className="regular-container flex flex-col gap-8 py-10">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <Logo />
