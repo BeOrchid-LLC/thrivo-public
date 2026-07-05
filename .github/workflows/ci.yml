@@ -31,7 +31,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_TELEMETRY_DISABLED: "1"
+          NEXT_TELEMETRY_DISABLED: '1'
           # Provide valid placeholders so the env schema doesn't warn.
           NEXT_PUBLIC_LIVE_URL: https://thrivo.fit
           NEXT_PUBLIC_API_URL: http://localhost:4000
