@@ -4,6 +4,7 @@ import { TrustBar } from './_sections/TrustBar';
 import { ValueProp } from './_sections/ValueProp';
 import { Features } from './_sections/Features';
 import { AppPreview } from './_sections/AppPreview';
+import { Pricing } from './_sections/Pricing';
 
 /**
  * Landing page. Remaining sections are built incrementally — see
@@ -18,6 +19,7 @@ export default function HomePage() {
       <ValueProp />
       <Features />
       <AppPreview />
+      <Pricing />
     </MainLayout>
   );
 }
