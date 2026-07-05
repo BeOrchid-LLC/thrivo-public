@@ -1,12 +1,14 @@
 'use client';
 
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
 import { EyebrowBadge } from '@/components/atoms/EyebrowBadge';
 import { StoreButtons } from '@/components/atoms/StoreButtons';
 import { RegularInput } from '@/components/atoms/RegularInput';
 import { RegularBtn } from '@/components/atoms/RegularBtn';
+import { toast } from '@/components/atoms/Toast';
+import { captureLead } from '@/lib/api/leads';
 import type { CtaContent } from '@/lib/content/cta';
 
 /**
@@ -18,9 +20,40 @@ import type { CtaContent } from '@/lib/content/cta';
  * BUILD-NOTES rule 3 already expect.
  */
 export function CtaView({ content }: { content: CtaContent }) {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO(cta): wire up the email-capture backend once it exists (see docs/BUILD-NOTES.md).
+    const form = event.currentTarget;
+    const email = new FormData(form).get('email');
+    if (typeof email !== 'string') return;
+
+    const params = new URLSearchParams(window.location.search);
+
+    setIsSubmitting(true);
+    try {
+      await captureLead({
+        email,
+        source: 'cta',
+        utmSource: params.get('utm_source') ?? undefined,
+        utmMedium: params.get('utm_medium') ?? undefined,
+        utmCampaign: params.get('utm_campaign') ?? undefined,
+      });
+      toast({
+        title: "You're on the list!",
+        description: "We'll email you the moment Thrivo launches.",
+        variant: 'success',
+      });
+      form.reset();
+    } catch {
+      toast({
+        title: 'Something went wrong',
+        description: 'Please try again in a moment.',
+        variant: 'error',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -58,6 +91,7 @@ export function CtaView({ content }: { content: CtaContent }) {
               name="email"
               placeholder={content.formPlaceholder}
               required
+              disabled={isSubmitting}
               wrapClassName="flex-1"
               aria-label={content.formLabel}
             />
@@ -65,6 +99,8 @@ export function CtaView({ content }: { content: CtaContent }) {
               type="submit"
               text={content.formCta}
               variant="none"
+              loading={isSubmitting}
+              disabled={isSubmitting}
               className="h-[3.25rem] shrink-0 rounded-md bg-primary-active text-white shadow-sm hover:bg-primary-active/90"
             />
           </form>
