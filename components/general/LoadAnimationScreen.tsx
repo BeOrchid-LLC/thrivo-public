@@ -6,11 +6,11 @@ import { useSiteStore } from '@/lib/store/siteStore';
 import { Logo } from '@/components/atoms/Logo';
 
 const SPLASH_SEEN_SESSION_KEY = 'thrivo-splash-seen';
-const BASE_LOAD_TIME = 800;
-const REPEAT_VISIT_LOAD_TIME = 200;
+const BASE_LOAD_TIME = 3000;
+const REPEAT_VISIT_LOAD_TIME = 3000;
 const TRANSITION_DURATION = 0.6;
 /** Safety net: force-dismiss even if `load` never fires (see the effect below). */
-const MAX_WAIT_TIME = 3000;
+const MAX_WAIT_TIME = 6000;
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
