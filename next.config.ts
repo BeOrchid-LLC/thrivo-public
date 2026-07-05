@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const liveUrl = process.env.NEXT_PUBLIC_LIVE_URL ?? 'https://thrivo.fit';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'https://api.thrivo.fit';
 // React dev mode needs eval() for debugging features; never allowed in production.
 const scriptSrc =
   process.env.NODE_ENV === 'production'
@@ -32,7 +33,7 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              `connect-src 'self' ${liveUrl}`,
+              `connect-src 'self' ${liveUrl} ${apiUrl}`,
               scriptSrc,
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob:",
