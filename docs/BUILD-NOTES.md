@@ -12,7 +12,8 @@ sections themselves are **not built yet** — this file is the contract for that
    - `StoreButtons` — App Store / Google Play dark pills with green glow
    - `PhoneFrame` — 36px-radius, 3px ink border app screenshot frame (mockups in `public/mockups/`)
    - `SectionContainer` + `SectionHeader` — section shell (eyebrow + h2 + subtext) and padding
-   - `FadeInUpSection` / `FadeInUpCard` (MotionContainers) — scroll-in animation, staggered cards
+   - `FadeInUpWrap` / `FadeInUpCard` (MotionContainers) — scroll-in animation, staggered cards; see
+     `docs/scroll-animations.md` for which primitive each section uses and how to add more
    - `RegularBtn` / `RegularInput` — buttons and the email-capture input (CTA form)
    - `ui/accordion` — FAQ; `ui/switch` — pricing monthly/annual toggle
    - Type scale utilities in `globals.css`: `.text-display`, `.text-section-h2`, `.text-eyebrow`,
