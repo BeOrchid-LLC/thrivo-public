@@ -321,6 +321,19 @@
     scroll-margin-top: calc(var(--header-height) + 0.5rem);
   }
 
+  /* LegalDocLayout section anchors: extra offset below `lg` clears the sticky
+     "on this page" bar (components/general/LegalDocLayout.tsx) that sits under
+     the fixed header on mobile/tablet; desktop has no such bar. */
+  .scroll-mt-legal {
+    scroll-margin-top: calc(var(--header-height) + 4.5rem);
+  }
+
+  @media (min-width: 1024px) {
+    .scroll-mt-legal {
+      scroll-margin-top: calc(var(--header-height) + 2rem);
+    }
+  }
+
   .center-circle {
     @apply rounded-full aspect-square grid place-items-center;
   }

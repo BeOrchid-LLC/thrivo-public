@@ -48,6 +48,13 @@ export const FOOTER_LINKS = [
   { label: 'Contact', href: '/contact' },
 ] as const;
 
+/** Nav links for the (legal) route group's header — swaps in for NAV_LINKS on those pages. */
+export const LEGAL_NAV_LINKS = [
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Service', href: '/terms-of-service' },
+  { label: 'Contact', href: '/contact' },
+] as const;
+
 export const SOCIAL_LINKS = [
   { label: '@getthrivo', href: 'https://x.com/getthrivo' },
   { label: '@thrivoapp', href: 'https://instagram.com/thrivoapp' },
