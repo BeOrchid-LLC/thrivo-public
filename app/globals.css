@@ -193,7 +193,7 @@
   }
 
   .text-eyebrow {
-    @apply text-[0.8125rem] font-bold uppercase tracking-[0.12em] text-primary-active;
+    @apply text-[0.75rem] font-bold uppercase tracking-[0.12em] text-primary-active;
   }
 
   .text-body-lg {
@@ -261,7 +261,7 @@
 
   /* Section eyebrow pill (tint bg + orange dot handled by EyebrowBadge) */
   .badge-pill {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[0.8125rem] font-bold uppercase tracking-[0.1em] text-primary;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[0.75rem] font-bold uppercase tracking-[0.1em] text-primary;
     background-image: var(--gradient-tint);
   }
 
