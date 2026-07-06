@@ -52,7 +52,7 @@ function ValuePropCard({ icon, title, body }: ValuePropCardData) {
 export function ValuePropView({ content }: { content: ValuePropContent }) {
   return (
     <SectionContainer>
-      <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:justify-center">
+      <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:justify-around">
         <div className="w-full max-w-[391px]">
           <SectionHeader
             eyebrow={content.eyebrow}

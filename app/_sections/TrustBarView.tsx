@@ -12,7 +12,7 @@ import type { TrustBarContent } from '@/lib/content/trust-bar';
 export function TrustBarView({ content }: { content: TrustBarContent }) {
   return (
     <section className="w-full border-y border-[#e5e7eb] bg-tint-band py-[41px]">
-      <div className="regular-container flex flex-wrap items-center justify-center gap-x-16 gap-y-8">
+      <div className="regular-container flex flex-wrap items-center justify-around gap-x-16 gap-y-8">
         {content.stats.map(stat => (
           <div key={stat.label} className="text-center">
             <p

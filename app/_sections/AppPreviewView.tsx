@@ -20,7 +20,7 @@ export function AppPreviewView({ content }: { content: AppPreviewContent }) {
       <Image src={content.backgroundImageSrc} alt="" fill sizes="100vw" className="object-cover" />
 
       <div className="regular-container relative z-10">
-        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-center lg:gap-x-[222px]">
+        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-around lg:gap-x-[222px]">
           <div className="flex justify-center">
             <Image
               src={content.phoneImageSrc}
