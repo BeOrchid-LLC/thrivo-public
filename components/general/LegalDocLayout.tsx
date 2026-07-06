@@ -13,7 +13,12 @@ import {
   Activity,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { LegalDocContent, LegalDocIconKey } from '@/lib/content/legal/types';
+import type {
+  LegalDocContent,
+  LegalDocGroup,
+  LegalDocIconKey,
+  LegalDocSection,
+} from '@/lib/content/legal/types';
 import type { LucideIconComp } from '@/lib/types/general';
 
 const LEGAL_DOC_ICONS: Record<LegalDocIconKey, LucideIconComp> = {
@@ -25,6 +30,74 @@ const LEGAL_DOC_ICONS: Record<LegalDocIconKey, LucideIconComp> = {
   'shield-alert': ShieldAlert,
   ban: Ban,
 };
+
+/** Bullet list of one group's items (e.g. under "Account information"). */
+function GroupItemList({ items }: { items: string[] }) {
+  return (
+    <ul className="mt-3 flex flex-col gap-2">
+      {items.map(item => (
+        <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** One bordered icon+bullet-list card within a section (e.g. "Account information"). */
+function GroupCard({ group }: { group: LegalDocGroup }) {
+  const Icon = LEGAL_DOC_ICONS[group.icon];
+  return (
+    <div className="card-surface p-5">
+      <div className="flex items-center gap-2">
+        <Icon className="size-4 text-primary" aria-hidden />
+        <p className="text-sm font-bold text-foreground">{group.label}</p>
+      </div>
+      <GroupItemList items={group.items} />
+    </div>
+  );
+}
+
+/** One numbered section: heading, optional callout pill, paragraphs, optional group cards. */
+function SectionBlock({
+  section,
+  index,
+  registerRef,
+}: {
+  section: LegalDocSection;
+  index: number;
+  registerRef: (el: HTMLElement | null) => void;
+}) {
+  return (
+    <section id={section.id} ref={registerRef} className="scroll-mt-legal">
+      <div className="flex items-center gap-3">
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-active text-sm font-bold text-white">
+          {index + 1}
+        </span>
+        <h2 className="text-lg font-bold text-foreground sm:text-xl">{section.heading}</h2>
+      </div>
+
+      {section.callout && <p className="badge-pill mt-4 w-fit">{section.callout}</p>}
+
+      <div className="mt-4 flex flex-col gap-3">
+        {section.paragraphs.map((paragraph, i) => (
+          <p key={i} className="leading-[1.625] text-muted-foreground">
+            {paragraph}
+          </p>
+        ))}
+      </div>
+
+      {section.groups && (
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          {section.groups.map(group => (
+            <GroupCard key={group.label} group={group} />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
 
 /**
  * Shared "long-form legal document" shell for Privacy Policy / Terms of
@@ -181,59 +254,14 @@ export function LegalDocLayout({ content }: { content: LegalDocContent }) {
             </div>
           </div>
           {sections.map((section, index) => (
-            <section
+            <SectionBlock
               key={section.id}
-              id={section.id}
-              ref={el => {
+              section={section}
+              index={index}
+              registerRef={el => {
                 sectionElsRef.current[section.id] = el;
               }}
-              className="scroll-mt-legal">
-              <div className="flex items-center gap-3">
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-active text-sm font-bold text-white">
-                  {index + 1}
-                </span>
-                <h2 className="text-lg font-bold text-foreground sm:text-xl">{section.heading}</h2>
-              </div>
-
-              {section.callout && <p className="badge-pill mt-4 w-fit">{section.callout}</p>}
-
-              <div className="mt-4 flex flex-col gap-3">
-                {section.paragraphs.map((paragraph, i) => (
-                  <p key={i} className="leading-[1.625] text-muted-foreground">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-
-              {section.groups && (
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  {section.groups.map(group => {
-                    const Icon = LEGAL_DOC_ICONS[group.icon];
-                    return (
-                      <div key={group.label} className="card-surface p-5">
-                        <div className="flex items-center gap-2">
-                          <Icon className="size-4 text-primary" aria-hidden />
-                          <p className="text-sm font-bold text-foreground">{group.label}</p>
-                        </div>
-                        <ul className="mt-3 flex flex-col gap-2">
-                          {group.items.map(item => (
-                            <li
-                              key={item}
-                              className="flex items-start gap-2 text-sm text-muted-foreground">
-                              <span
-                                className="mt-2 size-1.5 shrink-0 rounded-full bg-primary"
-                                aria-hidden
-                              />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
+            />
           ))}
         </div>
       </div>
