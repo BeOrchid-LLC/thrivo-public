@@ -1,5 +1,8 @@
+'use client';
+
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
+import { FadeInUpWrap, FadeInUpCard } from '@/components/general/MotionContainers';
 import {
   Accordion,
   AccordionItem,
@@ -34,16 +37,19 @@ export function FaqView({ content }: { content: FaqContent }) {
       <JsonLd data={faqJsonLd(content.questions)} />
 
       <div className="mx-auto flex max-w-[1152px] flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
-        <SectionHeader
-          eyebrow={content.eyebrow}
-          heading={content.heading}
-          subtext={content.subtext}
-          className="lg:max-w-[360px]"
-        />
+        <FadeInUpWrap className="lg:max-w-[360px]">
+          <SectionHeader
+            eyebrow={content.eyebrow}
+            heading={content.heading}
+            subtext={content.subtext}
+          />
+        </FadeInUpWrap>
 
         <Accordion type="single" collapsible className="w-full lg:max-w-[492px]">
           {content.questions.map((faq, index) => (
-            <FaqAccordionItem key={faq.question} value={`item-${index}`} {...faq} />
+            <FadeInUpCard key={faq.question} index={index}>
+              <FaqAccordionItem value={`item-${index}`} {...faq} />
+            </FadeInUpCard>
           ))}
         </Accordion>
       </div>

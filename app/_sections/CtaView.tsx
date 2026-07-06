@@ -3,6 +3,7 @@
 import { FormEvent, useState } from 'react';
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
+import { FadeInUpCard } from '@/components/general/MotionContainers';
 import { EyebrowBadge } from '@/components/atoms/EyebrowBadge';
 import { StoreButtons } from '@/components/atoms/StoreButtons';
 import { RegularInput } from '@/components/atoms/RegularInput';
@@ -62,7 +63,7 @@ export function CtaView({ content }: { content: CtaContent }) {
       className="scroll-mt-header"
       backgroundImageSrc="/images/cta-bg.png">
       <div className="mx-auto flex max-w-[1152px] flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between">
-        <div className="w-full max-w-[399px]">
+        <FadeInUpCard index={0} className="w-full max-w-[399px]">
           <SectionHeader
             eyebrow={
               <EyebrowBadge variant="solid" withDot className="w-fit">
@@ -78,9 +79,9 @@ export function CtaView({ content }: { content: CtaContent }) {
             appStoreHref={content.appStoreHref}
             googlePlayHref={content.googlePlayHref}
           />
-        </div>
+        </FadeInUpCard>
 
-        <div className="w-full max-w-[399px]">
+        <FadeInUpCard index={1} className="w-full max-w-[399px]">
           <p className="text-[0.6875rem] font-bold tracking-[0.1em] text-muted-foreground uppercase">
             {content.formLabel}
           </p>
@@ -106,7 +107,7 @@ export function CtaView({ content }: { content: CtaContent }) {
           </form>
 
           <p className="mt-3 text-[0.8125rem] text-muted-foreground">{content.formFinePrint}</p>
-        </div>
+        </FadeInUpCard>
       </div>
     </SectionContainer>
   );

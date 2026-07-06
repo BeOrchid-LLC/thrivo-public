@@ -1,6 +1,9 @@
+'use client';
+
 import { Bell, BarChart3, Droplets, Scan, ShieldCheck, TrendingUp } from 'lucide-react';
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
+import { FadeInUpWrap, FadeInUpCard } from '@/components/general/MotionContainers';
 import { cn } from '@/lib/utils';
 import type { LucideIconComp } from '@/lib/types/general';
 import type { Feature, FeatureIcon, FeaturesContent } from '@/lib/content/features';
@@ -47,15 +50,19 @@ export function FeaturesView({ content }: { content: FeaturesContent }) {
   return (
     <SectionContainer id="features" className="scroll-mt-header" background="muted">
       <div className="mx-auto max-w-[846px]">
-        <SectionHeader
-          eyebrow={content.eyebrow}
-          heading={content.heading}
-          headingClassName="max-w-[757px]"
-        />
+        <FadeInUpWrap>
+          <SectionHeader
+            eyebrow={content.eyebrow}
+            heading={content.heading}
+            headingClassName="max-w-[757px]"
+          />
+        </FadeInUpWrap>
 
         <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {content.features.map(feature => (
-            <FeatureCard key={feature.title} {...feature} />
+          {content.features.map((feature, index) => (
+            <FadeInUpCard key={feature.title} index={index}>
+              <FeatureCard {...feature} />
+            </FadeInUpCard>
           ))}
         </div>
       </div>

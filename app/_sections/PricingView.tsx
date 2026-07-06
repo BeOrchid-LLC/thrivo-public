@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Check, TriangleAlert } from 'lucide-react';
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
+import { FadeInUpWrap, FadeInUpCard } from '@/components/general/MotionContainers';
 import { Switch } from '@/components/ui/switch';
 import { AppLink } from '@/components/atoms/AppLink';
 import { cn } from '@/lib/utils';
@@ -141,43 +142,47 @@ export function PricingView({ content }: { content: PricingContent }) {
   return (
     <SectionContainer id="pricing" className="scroll-mt-header" background="muted">
       <div className="mx-auto max-w-[873px]">
-        <SectionHeader
-          eyebrow={content.eyebrow}
-          heading={content.heading}
-          subtext={content.subtext}
-          headingClassName="max-w-[576px]"
-        />
-
-        <div className="mt-8 flex items-center gap-4">
-          <span
-            className={cn(
-              'text-sm font-semibold',
-              isAnnual ? 'text-muted-foreground' : 'text-foreground'
-            )}>
-            {content.monthlyLabel}
-          </span>
-          <Switch
-            checked={isAnnual}
-            onCheckedChange={checked => setBillingCycle(checked ? 'annual' : 'monthly')}
-            aria-label="Toggle annual billing"
+        <FadeInUpWrap>
+          <SectionHeader
+            eyebrow={content.eyebrow}
+            heading={content.heading}
+            subtext={content.subtext}
+            headingClassName="max-w-[576px]"
           />
-          <span className="flex items-center gap-2">
+
+          <div className="mt-8 flex items-center gap-4">
             <span
               className={cn(
                 'text-sm font-semibold',
-                isAnnual ? 'text-foreground' : 'text-muted-foreground'
+                isAnnual ? 'text-muted-foreground' : 'text-foreground'
               )}>
-              {content.annualLabel}
+              {content.monthlyLabel}
             </span>
-            <span className="rounded-full bg-accent px-2 py-0.5 text-[0.6875rem] font-bold text-accent-foreground">
-              {content.annualSaveBadge}
+            <Switch
+              checked={isAnnual}
+              onCheckedChange={checked => setBillingCycle(checked ? 'annual' : 'monthly')}
+              aria-label="Toggle annual billing"
+            />
+            <span className="flex items-center gap-2">
+              <span
+                className={cn(
+                  'text-sm font-semibold',
+                  isAnnual ? 'text-foreground' : 'text-muted-foreground'
+                )}>
+                {content.annualLabel}
+              </span>
+              <span className="rounded-full bg-accent px-2 py-0.5 text-[0.6875rem] font-bold text-accent-foreground">
+                {content.annualSaveBadge}
+              </span>
             </span>
-          </span>
-        </div>
+          </div>
+        </FadeInUpWrap>
 
         <div className="mt-8 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
-          {content.plans.map(plan => (
-            <PricingCard key={plan.id} plan={plan} billingCycle={billingCycle} />
+          {content.plans.map((plan, index) => (
+            <FadeInUpCard key={plan.id} index={index}>
+              <PricingCard plan={plan} billingCycle={billingCycle} />
+            </FadeInUpCard>
           ))}
         </div>
 
