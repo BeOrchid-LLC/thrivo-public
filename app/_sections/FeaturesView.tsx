@@ -48,7 +48,7 @@ function FeatureCard({ icon, title, body, accent }: Feature) {
  */
 export function FeaturesView({ content }: { content: FeaturesContent }) {
   return (
-    <SectionContainer id="features" className="scroll-mt-header" background="muted">
+    <SectionContainer id="features" className="scroll-mt-header overflow-hidden" background="muted">
       <div className="mx-auto max-w-[846px]">
         <FadeInUpWrap>
           <SectionHeader

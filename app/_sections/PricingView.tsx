@@ -140,7 +140,7 @@ export function PricingView({ content }: { content: PricingContent }) {
   const isAnnual = billingCycle === 'annual';
 
   return (
-    <SectionContainer id="pricing" className="scroll-mt-header" background="muted">
+    <SectionContainer id="pricing" className="scroll-mt-header overflow-hidden" background="muted">
       <div className="mx-auto max-w-[873px]">
         <FadeInUpWrap>
           <SectionHeader
