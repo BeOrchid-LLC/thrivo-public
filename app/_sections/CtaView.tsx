@@ -81,7 +81,7 @@ export function CtaView({ content }: { content: CtaContent }) {
         </div>
 
         <div className="w-full max-w-[399px]">
-          <p className="text-[11px] font-bold tracking-[0.1em] text-muted-foreground uppercase">
+          <p className="text-[0.6875rem] font-bold tracking-[0.1em] text-muted-foreground uppercase">
             {content.formLabel}
           </p>
 
@@ -105,7 +105,7 @@ export function CtaView({ content }: { content: CtaContent }) {
             />
           </form>
 
-          <p className="mt-3 text-xs text-muted-foreground">{content.formFinePrint}</p>
+          <p className="mt-3 text-[0.8125rem] text-muted-foreground">{content.formFinePrint}</p>
         </div>
       </div>
     </SectionContainer>

@@ -150,7 +150,7 @@
   }
 
   body {
-    @apply min-h-screen w-full bg-background text-foreground font-body text-[15px] leading-normal break-words text-wrap text-start antialiased;
+    @apply min-h-screen w-full bg-background text-foreground font-body text-[0.9375rem] leading-normal break-words text-wrap text-start antialiased;
   }
 
   /* Defer off-screen layout/paint for long public pages until near viewport */
@@ -185,19 +185,19 @@
 @layer components {
   /* Type scale from the Figma landing page */
   .text-display {
-    @apply text-4xl md:text-5xl lg:text-[56px] font-extrabold leading-[1.06] tracking-[-0.025em] text-foreground;
+    @apply text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.06] tracking-[-0.025em] text-foreground;
   }
 
   .text-section-h2 {
-    @apply text-3xl md:text-[42px] font-extrabold leading-[1.1] tracking-[-0.025em] text-foreground;
+    @apply text-3xl md:text-[2.625rem] font-extrabold leading-[1.1] tracking-[-0.025em] text-foreground;
   }
 
   .text-eyebrow {
-    @apply text-xs font-bold uppercase tracking-[0.12em] text-primary-active;
+    @apply text-[0.8125rem] font-bold uppercase tracking-[0.12em] text-primary-active;
   }
 
   .text-body-lg {
-    @apply text-[17px] leading-[1.625] text-muted-foreground;
+    @apply text-[1.0625rem] leading-[1.625] text-muted-foreground;
   }
 
   /* Section-header supporting paragraph (eyebrow + h2 + this) — narrower and
@@ -207,15 +207,15 @@
   }
 
   .text-card-title {
-    @apply text-[15px] font-bold leading-[1.5] text-foreground;
+    @apply text-[0.9375rem] font-bold leading-[1.5] text-foreground;
   }
 
   .text-card-body {
-    @apply text-[13px] leading-[1.625] text-subtle-foreground;
+    @apply text-[0.8125rem] leading-[1.625] text-subtle-foreground;
   }
 
   .text-fine {
-    @apply text-xs leading-[1.5] text-muted-foreground;
+    @apply text-[0.8125rem] leading-[1.5] text-muted-foreground;
   }
 
   /* Green gradient text (hero heading highlight) */
@@ -261,7 +261,7 @@
 
   /* Section eyebrow pill (tint bg + orange dot handled by EyebrowBadge) */
   .badge-pill {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.1em] text-primary;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[0.8125rem] font-bold uppercase tracking-[0.1em] text-primary;
     background-image: var(--gradient-tint);
   }
 

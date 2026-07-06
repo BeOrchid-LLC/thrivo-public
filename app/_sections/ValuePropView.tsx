@@ -21,7 +21,7 @@ function ChecklistItem({ text }: { text: string }) {
       <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-tint-tile">
         <Check className="size-[11px] text-primary" aria-hidden />
       </span>
-      <span className="text-[15px] leading-[1.5] text-foreground">{text}</span>
+      <span className="text-[0.9375rem] leading-[1.5] text-foreground">{text}</span>
     </li>
   );
 }

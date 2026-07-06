@@ -17,12 +17,12 @@ export function TrustBarView({ content }: { content: TrustBarContent }) {
           <div key={stat.label} className="text-center">
             <p
               className={cn(
-                'text-[22px] leading-[1.5] font-extrabold',
+                'text-[1.375rem] leading-[1.5] font-extrabold',
                 stat.accent ? 'text-accent-hover' : 'text-foreground'
               )}>
               {stat.value}
             </p>
-            <p className="mt-1 text-xs leading-[1.5] text-muted-foreground">{stat.label}</p>
+            <p className="mt-1 text-base leading-[1.5] text-muted-foreground">{stat.label}</p>
           </div>
         ))}
       </div>

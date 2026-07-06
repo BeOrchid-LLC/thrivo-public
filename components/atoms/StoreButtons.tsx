@@ -17,7 +17,7 @@ function StoreButton({ href, iconSrc, label, className }: StoreButtonProps) {
     <Link
       href={href}
       className={cn(
-        'inline-flex h-13 min-w-[165px] items-center justify-center gap-2.5 rounded-md bg-foreground px-6 text-[15px] font-semibold text-background shadow-glow transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg',
+        'inline-flex h-13 min-w-[165px] items-center justify-center gap-2.5 rounded-md bg-foreground px-6 text-[0.9375rem] font-semibold text-background shadow-glow transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg',
         className
       )}>
       {/* eslint-disable-next-line @next/next/no-img-element -- static 20px icon, no benefit from next/image optimization */}

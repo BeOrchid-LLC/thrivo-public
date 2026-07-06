@@ -71,7 +71,7 @@ export const InputWrapper = ({
             <label
               htmlFor={fieldId}
               className={cn(
-                'text-[0.75rem] leading-[1.2] font-medium text-foreground',
+                'text-[0.8125rem] leading-[1.2] font-medium text-foreground',
                 labelTextClassName
               )}
               {...otherLabelProps}>
@@ -79,7 +79,9 @@ export const InputWrapper = ({
               {required ? ' *' : ''}
             </label>
           ) : null}
-          {subtext ? <div className="text-xs font-medium text-primary">{subtext}</div> : null}
+          {subtext ? (
+            <div className="text-[0.8125rem] font-medium text-primary">{subtext}</div>
+          ) : null}
         </div>
       )}
       <InputFieldIdContext.Provider value={fieldId}>
@@ -88,7 +90,10 @@ export const InputWrapper = ({
         </InputFieldA11yContext.Provider>
       </InputFieldIdContext.Provider>
       {hasError && (
-        <p id={errorId} role="alert" className={cn('text-xs md:text-sm text-red-500 mt-1')}>
+        <p
+          id={errorId}
+          role="alert"
+          className={cn('text-[0.8125rem] md:text-sm text-red-500 mt-1')}>
           {errors[0]}
         </p>
       )}
