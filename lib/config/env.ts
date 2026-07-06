@@ -7,7 +7,7 @@ import { z } from 'zod';
  */
 const envSchema = z.object({
   NEXT_PUBLIC_LIVE_URL: z.url().default('https://thrivo.fit'),
-  NEXT_PUBLIC_API_URL: z.url().default('http://localhost:4000'),
+  NEXT_PUBLIC_API_URL: z.url().default('https://api.thrivo.fit'),
   NEXT_PUBLIC_ENABLE_WEB_VITALS: z.enum(['0', '1']).optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
 });
