@@ -2,9 +2,11 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 # Delete the Windows-generated lockfile and reinstall so Linux optional deps
-# (e.g. @rollup/rollup-linux-x64-gnu) are resolved correctly.
+# (e.g. @rollup/rollup-linux-x64-gnu) are resolved correctly. .npmrc (legacy-peer-deps=true)
+# must come along -- @beorchid-llc/thrivo-contracts peer-depends on zod ^3 while this app is
+# on zod ^4 (only the contracts package's TS types are imported, never its zod schemas).
 RUN rm -f package-lock.json && npm install --no-audit --no-fund
 
 # ── Stage 2: build ──────────────────────────────────────────────────────────
