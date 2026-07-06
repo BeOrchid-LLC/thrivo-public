@@ -74,24 +74,8 @@ export function LegalDocLayout({ content }: { content: LegalDocContent }) {
 
   return (
     <div className="pb-24">
-      <div className="regular-container pt-12">
-        <h1 className="text-section-h2">{title}</h1>
-        <p className="text-section-subtext mt-3 max-w-2xl">{subtitle}</p>
-
-        <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 rounded-2xl bg-muted p-6 sm:grid-cols-4">
-          {meta.map(item => (
-            <div key={item.label}>
-              <p className="text-[0.6875rem] font-bold tracking-[0.08em] text-muted-foreground uppercase">
-                {item.label}
-              </p>
-              <p className="mt-1 text-sm font-bold text-foreground">{item.value}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Mobile/tablet collapsible TOC — sits right under the fixed header. */}
-      <div className="sticky top-[var(--header-height)] z-40 mt-8 border-y border-border bg-background lg:hidden">
+      <div className="sticky top-[var(--header-height)] z-40 mt-0 border-y border-border bg-background lg:hidden">
         <button
           type="button"
           onClick={() => setIsTocOpen(prev => !prev)}
@@ -149,7 +133,7 @@ export function LegalDocLayout({ content }: { content: LegalDocContent }) {
         </AnimatePresence>
       </div>
 
-      <div className="regular-container mt-8 lg:grid lg:grid-cols-[240px_1fr] lg:items-start lg:gap-16">
+      <div className="regular-container mt-0 lg:grid lg:grid-cols-[240px_1fr] lg:items-start lg:gap-16">
         {/* Desktop sidebar */}
         <nav
           className="sticky top-[calc(var(--header-height)+2rem)] hidden lg:block"
@@ -180,7 +164,22 @@ export function LegalDocLayout({ content }: { content: LegalDocContent }) {
         </nav>
 
         {/* Content */}
-        <div className="mt-10 flex flex-col gap-14 lg:mt-0">
+        <div className="mt-0 flex flex-col gap-14">
+          <div className="pt-12">
+            <h1 className="text-section-h2">{title}</h1>
+            <p className="text-section-subtext mt-3 max-w-2xl">{subtitle}</p>
+
+            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 rounded-2xl bg-muted p-6 sm:grid-cols-4">
+              {meta.map(item => (
+                <div key={item.label}>
+                  <p className="text-[0.6875rem] font-bold tracking-[0.08em] text-muted-foreground uppercase">
+                    {item.label}
+                  </p>
+                  <p className="mt-1 text-sm font-bold text-foreground">{item.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
           {sections.map((section, index) => (
             <section
               key={section.id}
