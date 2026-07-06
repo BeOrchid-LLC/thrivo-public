@@ -58,6 +58,51 @@ from the per-section content pipeline this mirrors.
 4. Above-the-fold content that should play immediately (not wait for scroll) → hand-roll `motion.*` with `animate` instead of `whileInView`, no `viewport` prop, staggered by manually-set `delay`s (copy from `HeroView.tsx`).
 5. Mark the file `'use client'` — every one of these components (the wrappers and raw `motion.*` elements) is client-only.
 
+## Known issue: pre-animation overflow (`overflow-hidden` on every animated section)
+
+**Problem:** on first load, the page has extra scrollable space — most visible as excess
+horizontal scroll room on mobile, but it's really an overall document-overflow issue — that
+shrinks back to normal as you scroll down and each section's reveal plays. By the time you reach
+the bottom, the overflow is gone. This is the same issue oj-multimedia hit and fixed the same way;
+recorded here so it isn't re-discovered (or re-"fixed" by masking the symptom, e.g. by disabling
+animations) the next time it shows up.
+
+**Cause:** `initial={{ opacity: 0, y: 50 }}` (or `x: ±20` for a slide) doesn't just hide an
+element — `transform: translateY(50px)` visually paints it 50px away from its actual box, and
+every element on the page mounts in this `initial` state immediately, whether or not it's near the
+viewport yet (`whileInView` only decides *when* to animate to the rest state; it doesn't defer
+mounting the `initial` one). A browser's scrollable area (`scrollWidth`/`scrollHeight`) is based on
+the *painted* extent of descendants, not their layout boxes, so a transformed-away element inflates
+its ancestor's scrollable area unless something in the ancestor chain clips it with
+`overflow: hidden`. With every section's off-screen cards/rows contributing their translated offset
+simultaneously on first paint, the document's total scrollable area is briefly larger than the real
+content — and shrinks section by section as each one's elements settle to `transform: none` while
+scrolling down.
+
+Minimal repro (paste in a console): a 100px-wide box containing a child at
+`transform: translateX(300px)` inflates `document.documentElement.scrollWidth` by the child's
+full offset; setting `overflow: hidden` on the parent brings it right back down. Every
+`FadeInUpWrap`/`FadeInUpCard`/hand-rolled `motion.li` instance in this repo is that child.
+
+**Fix:** every section that contains a scroll animation gets `overflow-hidden` on its own
+top-level element, so the transformed-but-not-yet-revealed descendants are clipped to that
+section's box instead of leaking into the page's overall scrollable area:
+
+- `TrustBarView.tsx`, `ValuePropView.tsx`, `FeaturesView.tsx`, `PricingView.tsx`, `FaqView.tsx` —
+  added `overflow-hidden` to the section's className (either the hand-rolled `<section>`, or via
+  `<SectionContainer className="...overflow-hidden">`).
+- `HeroView.tsx` and `AppPreviewView.tsx` already had `overflow-hidden` (needed anyway for their
+  full-bleed background images), so they were already covered before animations were added.
+- `CtaView.tsx` gets it for free — `SectionContainer` already adds `relative overflow-hidden`
+  automatically whenever `backgroundImageSrc` is passed, which CTA does.
+
+If you add a new animated section, give its outer element `overflow-hidden` (or use
+`SectionContainer`, which already does this whenever a `backgroundImageSrc` is set — otherwise add
+`overflow-hidden` to its `className` yourself, same as Features/Pricing/FAQ/ValueProp above).
+Don't rely on the body-level `overflow-x-hidden` in `app/layout.tsx` — that only masks horizontal
+overflow at the document root and does nothing for the vertical `scrollHeight` inflation, which is
+the actual root cause.
+
 ## Reduced motion
 
 Handled once, at the splash-screen level (`components/general/LoadAnimationScreen.tsx`):
