@@ -32,16 +32,12 @@ const LEGAL_DOC_ICONS: Record<LegalDocIconKey, LucideIconComp> = {
 };
 
 /** Bullet list of one group's items (e.g. under "Account information"). */
-function GroupItemList({ items }: { items: string[] }) {
+function GroupItem({ item }: { item: string }) {
   return (
-    <ul className="mt-3 flex flex-col gap-2">
-      {items.map(item => (
-        <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
-          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-          {item}
-        </li>
-      ))}
-    </ul>
+    <li className="flex items-start gap-2 text-sm text-muted-foreground">
+      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+      {item}
+    </li>
   );
 }
 
@@ -54,7 +50,11 @@ function GroupCard({ group }: { group: LegalDocGroup }) {
         <Icon className="size-4 text-primary" aria-hidden />
         <p className="text-sm font-bold text-foreground">{group.label}</p>
       </div>
-      <GroupItemList items={group.items} />
+      <ul className="mt-3 flex flex-col gap-2">
+        {group.items.map(item => (
+          <GroupItem key={item} item={item} />
+        ))}
+      </ul>
     </div>
   );
 }
