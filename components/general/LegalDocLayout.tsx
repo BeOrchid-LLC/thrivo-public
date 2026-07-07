@@ -1,65 +1,171 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import {
-  Ban,
-  ChevronDown,
-  CreditCard,
-  Server,
-  Shield,
-  ShieldAlert,
-  User,
-  Activity,
-} from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type {
+  LegalBlock,
   LegalDocContent,
-  LegalDocGroup,
-  LegalDocIconKey,
   LegalDocSection,
+  LegalListItem,
 } from '@/lib/content/legal/types';
-import type { LucideIconComp } from '@/lib/types/general';
+import { LegalFooter } from '../layout/LegalFooter';
 
-const LEGAL_DOC_ICONS: Record<LegalDocIconKey, LucideIconComp> = {
-  user: User,
-  activity: Activity,
-  shield: Shield,
-  server: Server,
-  'credit-card': CreditCard,
-  'shield-alert': ShieldAlert,
-  ban: Ban,
-};
+const EMAIL_PATTERN = /[\w.+-]+@[\w-]+\.[\w.-]+/g;
 
-/** Bullet list of one group's items (e.g. under "Account information"). */
-function GroupItem({ item }: { item: string }) {
+/** Renders `text` with any email addresses turned into mailto links (e.g. "email subscriptions@beorchid.com"). */
+function LinkifiedText({ text }: { text: string }) {
+  const parts = text.split(EMAIL_PATTERN);
+  const emails = text.match(EMAIL_PATTERN) ?? [];
+
+  return parts.map((part, i) => (
+    <Fragment key={i}>
+      {part}
+      {emails[i] && (
+        <a
+          href={`mailto:${emails[i]}`}
+          className="font-medium text-primary-active underline hover:no-underline">
+          {emails[i]}
+        </a>
+      )}
+    </Fragment>
+  ));
+}
+
+function ParagraphBlockView({ text }: { text: string }) {
   return (
-    <li className="flex items-start gap-2 text-sm text-muted-foreground">
-      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-      {item}
+    <p className="text-xs leading-[1.625] text-[#4a5565] lg:text-sm">
+      <LinkifiedText text={text} />
+    </p>
+  );
+}
+
+function ListItemRow({ item }: { item: LegalListItem }) {
+  return (
+    <li className="flex items-start gap-2 text-sm leading-[1.625] text-[#364153]">
+      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+      <span>
+        {item.term && <span className="font-bold text-foreground">{item.term} — </span>}
+        {item.text}
+      </span>
     </li>
   );
 }
 
-/** One bordered icon+bullet-list card within a section (e.g. "Account information"). */
-function GroupCard({ group }: { group: LegalDocGroup }) {
-  const Icon = LEGAL_DOC_ICONS[group.icon];
+/**
+ * One row of a definition-style list (e.g. "Stripe — payment processing"):
+ * dot + bold term + muted description, divided from the next row by a
+ * hairline border. Below `lg`, term/description stack vertically (no
+ * em-dash) with a primary-tinted divider and smaller type; at `lg` and up
+ * they sit inline on one line with a neutral divider.
+ */
+function DefinitionListRow({ item, isLast }: { item: LegalListItem; isLast: boolean }) {
   return (
-    <div className="card-surface p-5">
-      <div className="flex items-center gap-2">
-        <Icon className="size-4 text-primary" aria-hidden />
-        <p className="text-sm font-bold text-foreground">{group.label}</p>
+    <div
+      className={cn(
+        'flex items-start gap-3 px-3.5 py-3 lg:items-center lg:gap-2 lg:px-4 lg:py-2.5',
+        !isLast && 'border-b border-primary-active/[0.07] lg:border-black/10'
+      )}>
+      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary lg:mt-0" aria-hidden />
+      <div className="flex flex-col lg:flex-row lg:items-baseline lg:gap-1">
+        <span className="text-[0.8125rem] leading-[1.5] font-semibold text-[#1e2939] lg:text-sm">
+          {item.term}
+        </span>
+        <span className="text-[0.6875rem] leading-[1.375] text-[#6a7282] lg:text-sm">
+          <span className="hidden lg:inline">— </span>
+          {item.text}
+        </span>
       </div>
-      <ul className="mt-3 flex flex-col gap-2">
-        {group.items.map(item => (
-          <GroupItem key={item} item={item} />
+    </div>
+  );
+}
+
+/**
+ * A bordered bullet-list card; the icon+label header is optional (e.g. "Your
+ * rights" has no header). When every item has a `term`, it renders as a
+ * divided definition-list instead (e.g. "Third-party services") -- rows with
+ * their own padding and a hairline divider, rather than a padded card of
+ * flowing bullet text.
+ */
+function ListBlockView({ block }: { block: Extract<LegalBlock, { type: 'list' }> }) {
+  const isDefinitionList = block.items.every(item => item.term);
+
+  if (isDefinitionList) {
+    return (
+      <div className="overflow-hidden rounded-[14px] border border-primary-active/[0.13] lg:rounded-[10px]">
+        {block.items.map((item, i) => (
+          <DefinitionListRow key={i} item={item} isLast={i === block.items.length - 1} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-[10px] border border-primary-active/[0.13] p-4">
+      {(block.icon || block.label) && (
+        <div className="mb-2 flex items-center gap-2">
+          {block.icon && (
+            <span className="text-base" aria-hidden>
+              {block.icon}
+            </span>
+          )}
+          {block.label && <p className="text-sm font-semibold text-[#1e2939]">{block.label}</p>}
+        </div>
+      )}
+      <ul className="flex flex-col">
+        {block.items.map((item, i) => (
+          <ListItemRow key={i} item={item} />
         ))}
       </ul>
     </div>
   );
 }
 
-/** One numbered section: heading, optional callout pill, paragraphs, optional group cards. */
+/** An icon-less title + paragraph mini-card (e.g. "Retention"). */
+function NoteBlockView({ block }: { block: Extract<LegalBlock, { type: 'note' }> }) {
+  return (
+    <div className="rounded-lg bg-muted p-5">
+      <p className="text-sm font-bold text-foreground">{block.title}</p>
+      <p className="mt-2 text-sm text-muted-foreground">
+        <LinkifiedText text={block.text} />
+      </p>
+    </div>
+  );
+}
+
+/** A highlighted bar, optionally with an action button (e.g. "Email us"). */
+function CalloutBarBlockView({ block }: { block: Extract<LegalBlock, { type: 'callout-bar' }> }) {
+  return (
+    <div className="flex flex-col items-start gap-3 rounded-[10px] bg-primary-active/[0.06] px-4 py-3 lg:flex-row lg:items-center lg:justify-between">
+      <p className="text-sm text-[#364153]">
+        <LinkifiedText text={block.text} />
+      </p>
+      {block.action && (
+        <a
+          href={block.action.href}
+          className="inline-flex shrink-0 items-center justify-center rounded-[4px] bg-primary-active px-3 py-1.5 text-xs font-semibold text-white transition-colors duration-200 hover:bg-primary-active/90">
+          {block.action.label}
+        </a>
+      )}
+    </div>
+  );
+}
+
+function SectionBlockView({ block }: { block: LegalBlock }) {
+  switch (block.type) {
+    case 'paragraph':
+      return <ParagraphBlockView text={block.text} />;
+    case 'list':
+      return <ListBlockView block={block} />;
+    case 'note':
+      return <NoteBlockView block={block} />;
+    case 'callout-bar':
+      return <CalloutBarBlockView block={block} />;
+  }
+}
+
+/** One numbered section: heading, optional callout pill, then its ordered content blocks. */
 function SectionBlock({
   section,
   index,
@@ -71,30 +177,26 @@ function SectionBlock({
 }) {
   return (
     <section id={section.id} ref={registerRef} className="scroll-mt-legal">
-      <div className="flex items-center gap-3">
-        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-active text-sm font-bold text-white">
+      <div className="flex items-center gap-2.5 lg:gap-3">
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-active text-xs font-bold text-white lg:size-8 lg:text-sm lg:font-semibold">
           {index + 1}
         </span>
-        <h2 className="text-lg font-bold text-foreground sm:text-xl">{section.heading}</h2>
+        <h2 className="text-[0.9375rem] leading-[1.375] font-semibold text-[#101828] lg:text-lg">
+          {section.heading}
+        </h2>
       </div>
 
-      {section.callout && <p className="badge-pill mt-4 w-fit">{section.callout}</p>}
+      {section.callout && (
+        <p className="mt-4 inline-flex w-fit items-center rounded-[8px] bg-primary-active/[0.08] px-3 py-1.5 text-[0.75rem] leading-4 font-semibold tracking-[0.05em] text-primary-active uppercase lg:mt-5">
+          {section.callout}
+        </p>
+      )}
 
-      <div className="mt-4 flex flex-col gap-3">
-        {section.paragraphs.map((paragraph, i) => (
-          <p key={i} className="leading-[1.625] text-muted-foreground">
-            {paragraph}
-          </p>
+      <div className="mt-4 flex flex-col gap-4 lg:mt-5 lg:gap-5">
+        {section.blocks.map((block, i) => (
+          <SectionBlockView key={i} block={block} />
         ))}
       </div>
-
-      {section.groups && (
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {section.groups.map(group => (
-            <GroupCard key={group.label} group={group} />
-          ))}
-        </div>
-      )}
     </section>
   );
 }
@@ -239,16 +341,16 @@ export function LegalDocLayout({ content }: { content: LegalDocContent }) {
         {/* Content */}
         <div className="mt-0 flex flex-col gap-14">
           <div className="pt-12">
-            <h1 className="text-section-h2">{title}</h1>
-            <p className="text-section-subtext mt-3 max-w-2xl">{subtitle}</p>
+            <h1 className="text-3xl font-bold text-[#101828]">{title}</h1>
+            <p className="mt-2 max-w-2xl text-sm text-[#6a7282]">{subtitle}</p>
 
-            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 rounded-2xl bg-muted p-6 sm:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 rounded-[10px] border border-primary-active/[0.13] bg-primary-active/[0.03] px-8 py-4 sm:grid-cols-4">
               {meta.map(item => (
                 <div key={item.label}>
-                  <p className="text-[0.6875rem] font-bold tracking-[0.08em] text-muted-foreground uppercase">
+                  <p className="text-[0.625rem] leading-[0.9375rem] font-semibold tracking-[0.1em] text-[#99a1af] uppercase">
                     {item.label}
                   </p>
-                  <p className="mt-1 text-sm font-bold text-foreground">{item.value}</p>
+                  <p className="mt-1 text-sm font-medium text-[#1e2939]">{item.value}</p>
                 </div>
               ))}
             </div>
@@ -263,6 +365,7 @@ export function LegalDocLayout({ content }: { content: LegalDocContent }) {
               }}
             />
           ))}
+          <LegalFooter />
         </div>
       </div>
     </div>

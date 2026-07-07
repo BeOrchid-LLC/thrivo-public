@@ -1,11 +1,11 @@
 import { LegalHeader } from '@/components/layout/LegalHeader';
-import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/general/ScrollToTop';
 
 /**
- * Shared shell for Privacy Policy / Terms of Service / Contact — same
- * fixed-header + footer shape as `MainLayout`, but with `LegalHeader`
- * (legal-page nav, no "Get started" CTA) instead of the marketing `Header`.
+ * Shared shell for Privacy Policy / Terms of Service / Contact — fixed
+ * header + content + footer shape like `MainLayout`, but with `LegalHeader`
+ * (legal-page nav, no "Get started" CTA) and `LegalFooter` (compact,
+ * content-width-constrained, not the marketing site's full-bleed `Footer`).
  */
 export default function LegalLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,7 +15,6 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
         {children}
         <ScrollToTop />
       </main>
-      <Footer />
     </>
   );
 }
