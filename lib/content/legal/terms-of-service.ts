@@ -1,10 +1,26 @@
 import type { LegalDocContent } from './types';
 
+/**
+ * Reconciled against thrivo-legal.pages.dev (live reference copy). Vendor
+ * names use the real integrations verified in thrivo-backend/thrivo-mobile
+ * (RevenueCat, Sentry, PostHog, Open Food Facts, Resend, Cloudflare R2,
+ * Google OAuth) — the live copy's Stripe/Mixpanel aren't actually wired up
+ * (see privacy-policy.ts for the same swap).
+ *
+ * Three facts confirmed with the business owner directly (not derivable
+ * from code) rather than copied blind from the live reference:
+ * - Minimum age 13 w/ parental consent under 18 (matches the COPPA language
+ *   already committed in privacy-policy.ts, which the prior "16" draft did not)
+ * - Free trial stated as 14 days to match thrivo-public's own pricing page —
+ *   thrivo-mobile/src/config/pricing.ts currently hardcodes 7, that's a
+ *   separate app bug to fix, not a copy decision
+ * - Governing law: Delaware
+ */
 export const TERMS_OF_SERVICE_CONTENT: LegalDocContent = {
   title: 'Terms of Service',
   subtitle: 'The terms that govern your use of the Thrivo app and account',
   meta: [
-    { label: 'Effective date', value: 'January 1, 2026' },
+    { label: 'Effective date', value: 'June 12, 2026' },
     { label: 'Company', value: 'BeOrchid LLC' },
     { label: 'Platform', value: 'Thrivo iOS & Android' },
     { label: 'Client', value: 'All Thrivo Users' },
@@ -31,16 +47,22 @@ export const TERMS_OF_SERVICE_CONTENT: LegalDocContent = {
       ],
     },
     {
-      id: 'accounts-eligibility',
-      heading: 'Accounts & eligibility',
+      id: 'eligibility',
+      heading: 'Eligibility',
       blocks: [
         {
           type: 'paragraph',
-          text: 'You must be at least 16 years old to create a Thrivo account. You are responsible for keeping your sign-in credentials secure and for all activity under your account. Tell us right away if you suspect unauthorized access.',
+          text: 'You must be at least 13 years old to create a Thrivo account. If you are between 13 and 17 years old, you may only use Thrivo with the involvement and consent of a parent or legal guardian, who agrees to be bound by these terms on your behalf.',
         },
+      ],
+    },
+    {
+      id: 'account-registration',
+      heading: 'Account registration',
+      blocks: [
         {
           type: 'paragraph',
-          text: 'You agree to provide accurate account information (at minimum, a working email address) and to keep it up to date.',
+          text: 'You agree to provide accurate and complete registration information (at minimum, a working email address) and to keep it up to date. You are responsible for keeping your account credentials secure and confidential, and for all activity that occurs under your account. Notify us immediately at subscriptions@beorchid.com if you suspect unauthorized access.',
         },
       ],
     },
@@ -78,6 +100,20 @@ export const TERMS_OF_SERVICE_CONTENT: LegalDocContent = {
       ],
     },
     {
+      id: 'free-trial',
+      heading: 'Free trial',
+      blocks: [
+        {
+          type: 'paragraph',
+          text: "New Thrivo accounts are eligible for a one-time 14-day free trial of Premium, where offered. You won't be charged during the trial. Unless you cancel before the trial ends — through your App Store / Google Play subscription settings — you'll be automatically charged the subscription price shown at signup once the trial period ends.",
+        },
+        {
+          type: 'paragraph',
+          text: 'Trial eligibility and length are controlled by the app store you subscribed through and may vary by region or promotion.',
+        },
+      ],
+    },
+    {
       id: 'acceptable-use',
       heading: 'Acceptable use',
       blocks: [
@@ -86,11 +122,17 @@ export const TERMS_OF_SERVICE_CONTENT: LegalDocContent = {
           type: 'list',
           label: 'Not permitted',
           items: [
-            { text: 'Attempt to access another user’s account or data' },
+            { text: 'Attempt to access another user’s account or data without authorization' },
             { text: 'Reverse-engineer, decompile, or scrape the app or its API' },
-            { text: 'Use the app for any unlawful purpose or to violate anyone’s rights' },
+            { text: 'Use automated scripts or bots to interact with the app' },
+            { text: 'Transmit viruses, malware, or other malicious code' },
+            {
+              text: 'Use the app for any unlawful purpose or to infringe anyone’s intellectual property or other rights',
+            },
             { text: 'Interfere with or disrupt Thrivo’s infrastructure or security' },
-            { text: 'Circumvent subscription limits or paywalls' },
+            {
+              text: 'Share your account credentials with others, or circumvent subscription limits or paywalls',
+            },
           ],
         },
       ],
@@ -135,6 +177,35 @@ export const TERMS_OF_SERVICE_CONTENT: LegalDocContent = {
       ],
     },
     {
+      id: 'third-party-services',
+      heading: 'Third-party services',
+      blocks: [
+        {
+          type: 'paragraph',
+          text: 'Thrivo integrates the following third-party services to provide its features. Your use of these integrations is also subject to each provider’s own terms:',
+        },
+        {
+          type: 'list',
+          items: [
+            {
+              term: 'Open Food Facts',
+              text: 'nutritional and food database for barcode scanning and search',
+            },
+            { term: 'RevenueCat', text: 'subscription and in-app purchase management' },
+            { term: 'Resend', text: 'transactional email delivery' },
+            { term: 'Google', text: 'optional "Sign in with Google" authentication' },
+            { term: 'Sentry', text: 'crash and error reporting' },
+            { term: 'PostHog', text: 'product analytics' },
+            { term: 'Cloudflare R2', text: 'object storage for uploaded images (optional)' },
+          ],
+        },
+        {
+          type: 'paragraph',
+          text: 'We are not responsible for the availability, content, or practices of these third-party services.',
+        },
+      ],
+    },
+    {
       id: 'termination',
       heading: 'Termination',
       blocks: [
@@ -144,18 +215,24 @@ export const TERMS_OF_SERVICE_CONTENT: LegalDocContent = {
         },
         {
           type: 'paragraph',
-          text: 'Sections that by their nature should survive termination — including Intellectual property and Disclaimers & limitation of liability — continue to apply after your account is closed.',
+          text: 'Sections that by their nature should survive termination — including Intellectual property, Disclaimer of warranties, and Limitation of liability — continue to apply after your account is closed.',
         },
       ],
     },
     {
-      id: 'disclaimers-liability',
-      heading: 'Disclaimers & limitation of liability',
+      id: 'disclaimer-of-warranties',
+      heading: 'Disclaimer of warranties',
       blocks: [
         {
           type: 'paragraph',
           text: 'Thrivo is provided "as is" and "as available," without warranties of any kind, express or implied, including fitness for a particular purpose or non-infringement. We do not guarantee the app will be uninterrupted, error-free, or that calorie/macro estimates will be perfectly accurate.',
         },
+      ],
+    },
+    {
+      id: 'limitation-of-liability',
+      heading: 'Limitation of liability',
+      blocks: [
         {
           type: 'paragraph',
           text: 'To the fullest extent permitted by law, BeOrchid LLC is not liable for any indirect, incidental, or consequential damages arising from your use of Thrivo, including decisions made based on data or estimates in the app.',
@@ -181,7 +258,7 @@ export const TERMS_OF_SERVICE_CONTENT: LegalDocContent = {
       blocks: [
         {
           type: 'paragraph',
-          text: 'These terms are governed by the laws of the jurisdiction in which BeOrchid LLC is incorporated, without regard to conflict-of-law principles. Any dispute arising from these terms or your use of Thrivo will be resolved in the courts of that jurisdiction, unless applicable consumer-protection law in your country requires otherwise.',
+          text: 'These terms are governed by the laws of the State of Delaware, without regard to conflict-of-law principles. Any dispute arising from these terms or your use of Thrivo will be resolved in the state or federal courts located in Delaware, unless applicable consumer-protection law in your country requires otherwise.',
         },
       ],
     },
