@@ -19,7 +19,7 @@ export const PRIVACY_POLICY_CONTENT: LegalDocContent = {
   title: 'Privacy Policy',
   subtitle: 'How BeOrchid LLC collects, uses, and protects your personal information in Thrivo',
   meta: [
-    { label: 'Effective date', value: 'January 1, 2026' },
+    { label: 'Effective date', value: 'June 12, 2026' },
     { label: 'Company', value: 'BeOrchid LLC' },
     { label: 'Platform', value: 'Thrivo iOS & Android' },
     { label: 'Client', value: 'All Thrivo Users' },
@@ -128,10 +128,15 @@ export const PRIVACY_POLICY_CONTENT: LegalDocContent = {
           type: 'paragraph',
           text: "When you submit health data — including weight, calorie intake, macronutrients, and daily activity — we store it securely and use it solely to power Thrivo's features. We do not sell your health data to third parties or use it for advertising purposes. All health data is encrypted in transit using industry-standard protocols.",
         },
+      ],
+    },
+    {
+      id: 'data-retention',
+      heading: 'Data retention',
+      blocks: [
         {
-          type: 'note',
-          title: 'Retention',
-          text: 'We retain your health data for as long as your account is active. If you delete your account, we will delete your health data within 30 days, except where required by law to retain it longer.',
+          type: 'paragraph',
+          text: 'We retain your data for as long as your account is active. If you delete your account, we will delete or anonymize your personal data within 30 days, except where we are required by law to retain it longer.',
         },
       ],
     },
