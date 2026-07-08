@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import { SectionHeader } from '@/components/general/SectionHeader';
+import { FadeInUpCard } from '@/components/general/MotionContainers';
 import type { AppPreviewContent } from '@/lib/content/app-preview';
 
 /**
@@ -21,7 +24,7 @@ export function AppPreviewView({ content }: { content: AppPreviewContent }) {
 
       <div className="regular-container relative z-10">
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-around lg:gap-x-[222px]">
-          <div className="flex justify-center">
+          <FadeInUpCard index={0} className="flex justify-center">
             <Image
               src={content.phoneImageSrc}
               alt={content.phoneImageAlt}
@@ -29,15 +32,15 @@ export function AppPreviewView({ content }: { content: AppPreviewContent }) {
               height={486}
               className="h-auto w-full max-w-[218px]"
             />
-          </div>
+          </FadeInUpCard>
 
-          <div className="w-full max-w-[391px]">
+          <FadeInUpCard index={1} className="w-full max-w-[391px]">
             <SectionHeader
               eyebrow={content.eyebrow}
               heading={content.heading}
               subtext={content.paragraph}
             />
-          </div>
+          </FadeInUpCard>
         </div>
       </div>
     </section>

@@ -1,4 +1,7 @@
+'use client';
+
 import { cn } from '@/lib/utils';
+import { FadeInUpCard } from '@/components/general/MotionContainers';
 import type { TrustBarContent } from '@/lib/content/trust-bar';
 
 /**
@@ -11,19 +14,19 @@ import type { TrustBarContent } from '@/lib/content/trust-bar';
  */
 export function TrustBarView({ content }: { content: TrustBarContent }) {
   return (
-    <section className="w-full border-y border-[#e5e7eb] bg-tint-band py-[41px]">
+    <section className="w-full overflow-hidden border-y border-[#e5e7eb] bg-tint-band py-[41px]">
       <div className="regular-container flex flex-wrap items-center justify-around gap-x-16 gap-y-8">
-        {content.stats.map(stat => (
-          <div key={stat.label} className="text-center">
+        {content.stats.map((stat, index) => (
+          <FadeInUpCard key={stat.label} index={index} className="text-center">
             <p
               className={cn(
-                'text-[22px] leading-[1.5] font-extrabold',
+                'text-[1.375rem] leading-[1.5] font-extrabold',
                 stat.accent ? 'text-accent-hover' : 'text-foreground'
               )}>
               {stat.value}
             </p>
-            <p className="mt-1 text-xs leading-[1.5] text-muted-foreground">{stat.label}</p>
-          </div>
+            <p className="mt-1 text-base leading-[1.5] text-muted-foreground">{stat.label}</p>
+          </FadeInUpCard>
         ))}
       </div>
     </section>

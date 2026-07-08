@@ -1,6 +1,10 @@
+'use client';
+
+import { motion } from 'motion/react';
 import { Check, Leaf, ShieldCheck, Zap } from 'lucide-react';
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
+import { FadeInUpWrap, FadeInUpCard } from '@/components/general/MotionContainers';
 import type { LucideIconComp } from '@/lib/types/general';
 import type {
   ValuePropCard as ValuePropCardData,
@@ -14,15 +18,20 @@ const CARD_ICONS: Record<ValuePropCardIcon, LucideIconComp> = {
   leaf: Leaf,
 };
 
-/** One checklist row: tint-tile bullet + statement (repeated for content.checklist). */
-function ChecklistItem({ text }: { text: string }) {
+/** One checklist row: tint-tile bullet + statement (repeated for content.checklist). `motion.li` (not FadeInUpCard, which renders a div) to keep the `<ul>`'s list semantics. */
+function ChecklistItem({ text, index }: { text: string; index: number }) {
   return (
-    <li className="flex items-start gap-3">
+    <motion.li
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="flex items-start gap-3">
       <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-tint-tile">
         <Check className="size-[11px] text-primary" aria-hidden />
       </span>
-      <span className="text-[15px] leading-[1.5] text-foreground">{text}</span>
-    </li>
+      <span className="text-[0.9375rem] leading-[1.5] text-foreground">{text}</span>
+    </motion.li>
   );
 }
 
@@ -51,24 +60,28 @@ function ValuePropCard({ icon, title, body }: ValuePropCardData) {
  */
 export function ValuePropView({ content }: { content: ValuePropContent }) {
   return (
-    <SectionContainer>
+    <SectionContainer className="overflow-hidden">
       <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:justify-around">
         <div className="w-full max-w-[391px]">
-          <SectionHeader
-            eyebrow={content.eyebrow}
-            heading={content.heading}
-            subtext={content.subtext}
-          />
+          <FadeInUpWrap>
+            <SectionHeader
+              eyebrow={content.eyebrow}
+              heading={content.heading}
+              subtext={content.subtext}
+            />
+          </FadeInUpWrap>
           <ul className="mt-8 flex flex-col gap-4">
-            {content.checklist.map(item => (
-              <ChecklistItem key={item} text={item} />
+            {content.checklist.map((item, index) => (
+              <ChecklistItem key={item} text={item} index={index} />
             ))}
           </ul>
         </div>
 
         <div className="flex w-full max-w-[391px] flex-col gap-5 rounded-3xl bg-tint-panel p-8">
-          {content.cards.map(card => (
-            <ValuePropCard key={card.title} {...card} />
+          {content.cards.map((card, index) => (
+            <FadeInUpCard key={card.title} index={index}>
+              <ValuePropCard {...card} />
+            </FadeInUpCard>
           ))}
         </div>
       </div>
