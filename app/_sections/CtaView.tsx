@@ -1,6 +1,10 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { z } from 'zod';
+import { leadCapturePayloadSchema } from '@beorchid-llc/thrivo-contracts';
 import { SectionContainer } from '@/components/general/SectionContainer';
 import { SectionHeader } from '@/components/general/SectionHeader';
 import { FadeInUpCard } from '@/components/general/MotionContainers';
@@ -12,6 +16,14 @@ import { toast } from '@/components/atoms/Toast';
 import { captureLead } from '@/lib/api/leads';
 import type { CtaContent } from '@/lib/content/cta';
 
+// Derived from the shared contracts schema (the same one the backend's
+// leadsRateLimit route validates against) rather than re-declared, so client
+// and server can never drift on what counts as a valid email (R6 I24). The
+// form only collects `email`; `source` and the UTM params are added
+// programmatically after validation, same as before.
+const ctaEmailSchema = leadCapturePayloadSchema.pick({ email: true });
+type CtaFormValues = z.infer<typeof ctaEmailSchema>;
+
 /**
  * CTA (Figma node 144:855), presentational: pure function of `content`. Only
  * the elements visible in the reference screenshot are built -- the design's
@@ -22,13 +34,17 @@ import type { CtaContent } from '@/lib/content/cta';
  */
 export function CtaView({ content }: { content: CtaContent }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CtaFormValues>({
+    resolver: zodResolver(ctaEmailSchema),
+    defaultValues: { email: '' },
+  });
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const email = new FormData(form).get('email');
-    if (typeof email !== 'string') return;
-
+  const onSubmit = async ({ email }: CtaFormValues) => {
     const params = new URLSearchParams(window.location.search);
 
     setIsSubmitting(true);
@@ -45,7 +61,7 @@ export function CtaView({ content }: { content: CtaContent }) {
         description: "We'll email you the moment Thrivo launches.",
         variant: 'success',
       });
-      form.reset();
+      reset();
     } catch {
       toast({
         title: 'Something went wrong',
@@ -86,15 +102,18 @@ export function CtaView({ content }: { content: CtaContent }) {
             {content.formLabel}
           </p>
 
-          <form onSubmit={handleSubmit} className="mt-3 flex items-start gap-3">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="mt-3 flex items-start gap-3">
             <RegularInput
               type="email"
-              name="email"
               placeholder={content.formPlaceholder}
-              required
               disabled={isSubmitting}
               wrapClassName="flex-1"
               aria-label={content.formLabel}
+              errors={errors.email?.message ? [errors.email.message] : []}
+              {...register('email')}
             />
             <RegularBtn
               type="submit"
