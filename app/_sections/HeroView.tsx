@@ -17,7 +17,10 @@ import type { HeroContent } from '@/lib/content/hero';
  *
  * Above-the-fold, so its reveal plays on mount (`animate`, not the
  * `whileInView` scroll-trigger every other section uses) with each element
- * cascading in 0.1s apart -- see docs/scroll-animations.md.
+ * cascading in 0.1s apart -- see docs/scroll-animations.md. The h1 and the
+ * priority dashboard image are the LCP candidates, so they skip the
+ * `initial={{opacity:0}}` gate (`initial={false}`) and paint immediately;
+ * everything else still cascades in (R6 I23).
  */
 export function HeroView({ content }: { content: HeroContent }) {
   return (
@@ -43,7 +46,7 @@ export function HeroView({ content }: { content: HeroContent }) {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-display mt-6">
@@ -80,7 +83,7 @@ export function HeroView({ content }: { content: HeroContent }) {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex justify-center lg:justify-end">
