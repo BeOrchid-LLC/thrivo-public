@@ -9,8 +9,8 @@
     },
     {
       "name": "thrivo-public-prod",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["start"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".next/standalone/server.js"],
       "port": 3000
     }
   ]
