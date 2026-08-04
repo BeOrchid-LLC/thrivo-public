@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { fetchSectionContent } from './fetch-content';
+import { env } from '@/lib/config/env';
 
 export interface CtaContent {
   badge: string;
@@ -23,8 +24,8 @@ export const CTA_CONTENT_FALLBACK: CtaContent = {
   badge: 'Launching soon',
   heading: 'Start losing weight today.',
   subtext: 'No tricks. No tedious set-ups. No fluff. Scan your first food in 60 seconds.',
-  appStoreHref: '#',
-  googlePlayHref: '#',
+  appStoreHref: env.NEXT_PUBLIC_APP_STORE_URL ?? '/#get-started',
+  googlePlayHref: env.NEXT_PUBLIC_GOOGLE_PLAY_URL ?? '/#get-started',
   formLabel: 'Get launch notification',
   formPlaceholder: 'your@email.com',
   formCta: 'Notify me',

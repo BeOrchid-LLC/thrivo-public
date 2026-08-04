@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { env } from '@/lib/config/env';
 
 interface StoreButtonProps {
   href: string;
@@ -35,8 +36,8 @@ interface StoreButtonsProps {
 
 /** App Store + Google Play button pair used in the hero and CTA sections. */
 export function StoreButtons({
-  appStoreHref = '#',
-  googlePlayHref = '#',
+  appStoreHref = env.NEXT_PUBLIC_APP_STORE_URL ?? '/#get-started',
+  googlePlayHref = env.NEXT_PUBLIC_GOOGLE_PLAY_URL ?? '/#get-started',
   className,
 }: StoreButtonsProps) {
   return (

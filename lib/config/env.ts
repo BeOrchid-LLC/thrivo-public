@@ -10,6 +10,8 @@ const envSchema = z.object({
   NEXT_PUBLIC_API_URL: z.url().default('https://api.thrivo.fit'),
   NEXT_PUBLIC_ENABLE_WEB_VITALS: z.enum(['0', '1']).optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
+  NEXT_PUBLIC_APP_STORE_URL: z.url().optional(),
+  NEXT_PUBLIC_GOOGLE_PLAY_URL: z.url().optional(),
 });
 
 export const env = envSchema.parse({
@@ -17,6 +19,8 @@ export const env = envSchema.parse({
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   NEXT_PUBLIC_ENABLE_WEB_VITALS: process.env.NEXT_PUBLIC_ENABLE_WEB_VITALS,
   NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  NEXT_PUBLIC_APP_STORE_URL: process.env.NEXT_PUBLIC_APP_STORE_URL,
+  NEXT_PUBLIC_GOOGLE_PLAY_URL: process.env.NEXT_PUBLIC_GOOGLE_PLAY_URL,
 });
 
 export const liveUrl = env.NEXT_PUBLIC_LIVE_URL;
