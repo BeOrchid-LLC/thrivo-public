@@ -7,8 +7,8 @@ export function AppPreviewSkeleton() {
       className="relative overflow-hidden section-padding"
       aria-busy="true"
       aria-label="Loading app preview">
-      <div className="regular-container">
-        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-center lg:gap-x-[222px]">
+      <div className="regular-container px-4">
+        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-x-[222px]">
           <Skeleton className="h-[486px] w-full max-w-[218px] rounded-phone" />
 
           <div className="w-full max-w-[391px]">

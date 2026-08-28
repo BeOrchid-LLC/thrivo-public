@@ -34,7 +34,7 @@ export function HeroView({ content }: { content: HeroContent }) {
         className="object-cover"
       />
 
-      <div className="regular-container relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
+      <div className="regular-container px-4 relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
         <div className="max-w-[448px]">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

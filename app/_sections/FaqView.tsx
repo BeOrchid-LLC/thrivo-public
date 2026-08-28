@@ -26,17 +26,18 @@ function FaqAccordionItem({ value, question, answer }: { value: string } & FaqQu
 /**
  * FAQ (Figma node 144:804), presentational: pure function of `content` so
  * both the live-fetched path and the error-boundary fallback path render
- * identical markup. Header column is capped narrow like the design (a
- * left-aligned SectionHeader, not the centered variant other sections use);
- * the accordion column sits to its right at the design's ~492px, with the
- * pair spread across the shared max-width container via justify-between.
+ * identical markup. Header and accordion retain their readable column widths,
+ * while the pair spans the shared section rails via justify-between.
  */
 export function FaqView({ content }: { content: FaqContent }) {
   return (
-    <SectionContainer id="faq" className="scroll-mt-header overflow-hidden">
+    <SectionContainer
+      id="faq"
+      className="scroll-mt-header overflow-hidden"
+      containerClassName="px-4">
       <JsonLd data={faqJsonLd(content.questions)} />
 
-      <div className="mx-auto flex max-w-[1152px] flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
         <FadeInUpWrap className="lg:max-w-[360px]">
           <SectionHeader
             eyebrow={content.eyebrow}

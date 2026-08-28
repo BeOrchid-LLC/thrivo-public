@@ -41,15 +41,17 @@ function FeatureCard({ icon, title, body, accent }: Feature) {
 /**
  * Features (Figma node 144:601), presentational: pure function of `content`
  * so both the live-fetched path and the error-boundary fallback path render
- * identical markup. Header + grid are capped at the design's 846px so they
- * read as a centered column rather than stretching across the full section
- * width; outer section padding/max-width and the muted section bg come from
- * the shared SectionContainer.
+ * identical markup. The header and grid use the full shared section rails; the
+ * heading itself retains its readable text width.
  */
 export function FeaturesView({ content }: { content: FeaturesContent }) {
   return (
-    <SectionContainer id="features" className="scroll-mt-header overflow-hidden" background="muted">
-      <div className="mx-auto max-w-[846px]">
+    <SectionContainer
+      id="features"
+      className="scroll-mt-header overflow-hidden"
+      background="muted"
+      containerClassName="px-4">
+      <div>
         <FadeInUpWrap>
           <SectionHeader
             eyebrow={content.eyebrow}

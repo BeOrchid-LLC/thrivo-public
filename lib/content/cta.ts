@@ -29,7 +29,7 @@ export const CTA_CONTENT_FALLBACK: CtaContent = {
   formLabel: 'Get launch notification',
   formPlaceholder: 'your@email.com',
   formCta: 'Notify me',
-  formFinePrint: 'One email when we launch. No spam.',
+  formFinePrint: 'A confirmation now, then one email when we launch. No spam.',
 };
 
 /**

@@ -14,6 +14,7 @@ npm run build        # production build (standalone output)
 npm run checks       # lint + format:check + test:unit + build
 npm run test:unit    # vitest (jsdom)
 npm run test:e2e     # playwright
+npm run test:e2e:deployed # email-link routes against https://preview.thrivo.fit
 ```
 
 ## Deploy
@@ -21,7 +22,9 @@ npm run test:e2e     # playwright
 Coolify builds from `Dockerfile` (multi-stage, node:22-alpine, port 3000). The deps stage
 reinstalls from `package.json` because the committed lockfile is Windows-generated (win32-only
 optional deps break Linux builds). Healthcheck hits `/api/health`. Pass `NEXT_PUBLIC_LIVE_URL`
-as a Coolify build variable.
+as a Coolify build variable. The current deployed public app is the preview host
+(`https://preview.thrivo.fit`); promotion to `thrivo.fit` is intentionally pending approval.
+Store buttons remain placeholders until the app-store listings are live.
 
 ## Docs
 

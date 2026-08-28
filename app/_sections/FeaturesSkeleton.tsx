@@ -4,8 +4,12 @@ import { SectionContainer } from '@/components/general/SectionContainer';
 /** Loading placeholder shown while `getFeaturesContent()` is pending; mirrors FeaturesView's shell so there's no layout shift when real content swaps in. */
 export function FeaturesSkeleton() {
   return (
-    <SectionContainer id="features" className="scroll-mt-header" background="muted">
-      <div className="mx-auto max-w-[846px]" aria-busy="true" aria-label="Loading features">
+    <SectionContainer
+      id="features"
+      className="scroll-mt-header"
+      background="muted"
+      containerClassName="px-4">
+      <div aria-busy="true" aria-label="Loading features">
         <Skeleton className="h-4 w-24 rounded-full" />
         <Skeleton className="mt-4 h-[93px] w-full max-w-[757px]" />
 

@@ -15,7 +15,7 @@ export function LegalFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="regular-container flex flex-col items-start gap-3 border-t border-primary-active/[0.13] mt-2 lg:mt-10 pt-6 pb-0 lg:pb-10 lg:flex-row lg:items-center lg:justify-between">
+    <footer className="regular-container px-4 flex flex-col items-start gap-3 border-t border-primary-active/[0.13] mt-2 lg:mt-10 pt-6 pb-0 lg:pb-10 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex flex-wrap items-center gap-2 text-xs text-[#737373]">
         <LogoMark size={20} />
         <span>© {year} BeOrchid LLC</span>

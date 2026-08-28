@@ -12,8 +12,9 @@ import { LEGAL_NAV_LINKS } from '@/lib/constants/texts';
 
 /**
  * Header variant for the (legal) route group (Figma: Privacy Policy /
- * Terms of Service / Contact). Same fixed-bar shell as `Header`, but the
- * marketing nav + "Get started" CTA are swapped for the 3 legal-page links
+ * Terms of Service / Cancellation Policy / Contact). Same fixed-bar shell as
+ * `Header`, but the marketing nav + "Get started" CTA are swapped for legal
+ * page links
  * with active-route highlighting — there's no CTA on these pages at all,
  * not just a hidden one.
  */

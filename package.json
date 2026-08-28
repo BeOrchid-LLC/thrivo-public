@@ -13,6 +13,7 @@
     "test:unit": "vitest run --config vitest.unit.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "test:e2e": "playwright test",
+    "test:e2e:deployed": "cross-env PLAYWRIGHT_BASE_URL=https://preview.thrivo.fit playwright test tests/e2e/email-links.spec.ts --project=chromium",
     "test:e2e:smoke": "cross-env PLAYWRIGHT_USE_WEBSERVER=1 playwright test --grep @smoke --project=chromium",
     "test:e2e:a11y": "cross-env PLAYWRIGHT_USE_WEBSERVER=1 playwright test tests/e2e/a11y-critical-journeys.spec.ts --project=chromium",
     "test:phase": "vitest run --config vitest.phase.config.ts",

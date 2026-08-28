@@ -18,8 +18,8 @@ export const metadata: Metadata = {
  */
 export default function ContactPage() {
   return (
-    <>
-      <SectionContainer customContainer>
+    <div className="flex min-h-[calc(100vh-var(--header-height))] flex-col">
+      <SectionContainer customContainer className="flex-1">
         <SectionHeader
           eyebrow="Contact"
           heading="We're here to help."
@@ -80,6 +80,6 @@ export default function ContactPage() {
         </div>
       </SectionContainer>
       <LegalFooter />
-    </>
+    </div>
   );
 }

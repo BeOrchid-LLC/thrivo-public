@@ -2,7 +2,8 @@
 
 The repo skeleton replicates `oj-multimedia` conventions with design tokens extracted from the
 Thrivo Figma landing page (frame **144:457**, select it in Figma desktop for MCP access). The
-sections themselves are **not built yet** — this file is the contract for that phase.
+The marketing, legal, waitlist, and email-link handoff surfaces are implemented; this file
+records the patterns and remaining launch work.
 
 ## Rules for the section-building phase
 
@@ -61,14 +62,26 @@ sections themselves are **not built yet** — this file is the contract for that
 | AppPreview | 144:668 | done — `app/_sections/AppPreview.tsx` + `AppPreviewView`/`AppPreviewSkeleton` + `lib/content/app-preview.ts`. Hand-rolled section (like Hero) for the full-bleed `public/images/progress-bg.png`; phone mockup (`public/images/mobile-progress-tracker.png`, frame baked into the PNG like Hero's dashboard image) + `SectionHeader` centered as a pair, per the reference screenshot rather than Figma's raw node tree, which has a couple of stray nodes that never render (an empty duplicate container behind the phone, an off-canvas decorative layer) |
 | Pricing | 144:681 | done — `app/_sections/Pricing.tsx` + `PricingView`/`PricingSkeleton` + `lib/content/pricing.ts`. `id="pricing"` + `scroll-mt-header`. `PricingCard` sub-component colocated in `PricingView.tsx`, mapped over `content.plans` (Free / Premium); billing-cycle toggle (`ui/switch`) is local UI state, not content -- it swaps each plan's `monthly`/`annual` price object. New `.bg-premium-card` gradient utility (`globals.css`) for the Premium card fill, matching Figma's green gradient via the existing `primary`/`primary-light`/`primary-active` tokens |
 | FAQ | 144:804 | done — `app/_sections/Faq.tsx` + `FaqView`/`FaqSkeleton` + `lib/content/faq.ts`. `id="faq"` + `scroll-mt-header`. Left `SectionHeader` (narrow, left-aligned) + right `ui/accordion` column spread via `justify-between`, matching the design's asymmetric two-column layout rather than a centered pair. `FaqAccordionItem` sub-component colocated in `FaqView.tsx`, mapped over `content.questions`; `ui/accordion`'s existing styling (divider, chevron rotate, spacing) already matched the design as-is. Renders `faqJsonLd(content.questions)` via `<JsonLd />` (rule 4); `organizationJsonLd()` + `websiteJsonLd()` + `mobileAppJsonLd()` now render once in `app/page.tsx` |
-| CTA | 144:855 | done — `app/_sections/Cta.tsx` + `CtaView`/`CtaSkeleton` + `lib/content/cta.ts`. `id="get-started"` + `scroll-mt-header`, matching the header's existing "Get started" anchor. Built from the reference screenshot, not Figma's raw node tree -- the radial glow-orb layer (node 144:856) is already baked into `public/images/cta-bg.png`. New `backgroundImageSrc` prop on `SectionContainer` renders that full-bleed image behind the container, so this section keeps using the shared container instead of hand-rolling one like Hero/AppPreview. `SectionHeader`'s `eyebrow` now accepts a node, not just a string, so the "Launching soon" pill (new `EyebrowBadge` `variant="solid"`, orange fill/white text/dot, vs the existing tint variant) can stand in for the usual text eyebrow. `StoreButtons` reused for the app links; `RegularInput` + `RegularBtn` for the email-capture form (submit handler is a no-op stub -- backend is a deferred phase) |
+| CTA | 144:855 | done — `app/_sections/Cta.tsx` + `CtaView`/`CtaSkeleton` + `lib/content/cta.ts`. `id="get-started"` + `scroll-mt-header`, matching the header's existing "Get started" anchor. Built from the reference screenshot, not Figma's raw node tree -- the radial glow-orb layer (node 144:856) is already baked into `public/images/cta-bg.png`. New `backgroundImageSrc` prop on `SectionContainer` renders that full-bleed image behind the container, so this section keeps using the shared container instead of hand-rolling one like Hero/AppPreview. `SectionHeader`'s `eyebrow` now accepts a node, not just a string, so the "Launching soon" pill (new `EyebrowBadge` `variant="solid"`, orange fill/white text/dot, vs the existing tint variant) can stand in for the usual text eyebrow. `StoreButtons` reused for the app links; `RegularInput` + `RegularBtn` submit to the backend lead-capture endpoint, which persists the lead and queues one idempotent waitlist-confirmation email. Store URLs remain placeholders until the listings are published. |
 | Footer | 144:886 | done — `components/layout/Footer.tsx` |
+
+## Runtime verification
+
+- The CTA implementation is live: submissions post to the backend, persist the lead, and queue
+  an idempotent waitlist-confirmation email. The older section-inventory wording about a stub is
+  historical and should not be used as an implementation status.
+- `npm run test:e2e:deployed` runs the email-link destination suite against the current preview
+  deployment at `https://preview.thrivo.fit`.
+- The suite checks `/dashboard`, `/log`, `/metrics`, `/settings/subscription`, and
+  `/unsubscribe`, including the expected app handoff links.
+- Promotion from `https://preview.thrivo.fit` to `https://thrivo.fit` remains a release decision
+  pending approval.
 
 ## Deferred / later phases
 
-- Legal pages: `/privacy-policy`, `/terms-of-service`, `/cancellation-policy`, `/contact`
-  (footer already links to them).
-- Email capture backend for the CTA form (add env vars to `.env.example` + `lib/config/env.ts`).
+- Store listing URLs: keep App Store and Google Play buttons on their intentional `/#get-started`
+  placeholders until the real listings exist.
+- Main-domain promotion: deploy to `https://thrivo.fit` after approval.
 - Performance budget scripts (`lighthouse-budget.json`, `performance-budgets.json` +
   `checks:performance`) — port from oj-multimedia at the NFR pass.
 - SEO/AEO/GEO follow-ups per `docs/seo-aeo-geo-strategy.md` (llms.txt already in `public/`).
