@@ -7,9 +7,10 @@ export function CtaSkeleton() {
     <SectionContainer
       id="get-started"
       className="scroll-mt-header"
+      containerClassName="px-4"
       backgroundImageSrc="/images/cta-bg.png">
       <div
-        className="mx-auto flex max-w-[1152px] flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between"
+        className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between"
         aria-busy="true"
         aria-label="Loading CTA">
         <div className="w-full max-w-[399px]">

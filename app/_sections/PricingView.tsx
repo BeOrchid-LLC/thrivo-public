@@ -140,8 +140,12 @@ export function PricingView({ content }: { content: PricingContent }) {
   const isAnnual = billingCycle === 'annual';
 
   return (
-    <SectionContainer id="pricing" className="scroll-mt-header overflow-hidden" background="muted">
-      <div className="mx-auto max-w-[873px]">
+    <SectionContainer
+      id="pricing"
+      className="scroll-mt-header overflow-hidden"
+      background="muted"
+      containerClassName="px-4">
+      <div>
         <FadeInUpWrap>
           <SectionHeader
             eyebrow={content.eyebrow}
@@ -150,7 +154,7 @@ export function PricingView({ content }: { content: PricingContent }) {
             headingClassName="max-w-[576px]"
           />
 
-          <div className="mt-8 flex items-center gap-4">
+          <div className="max-w-4xl mx-auto mt-16 flex items-center gap-4">
             <span
               className={cn(
                 'text-sm font-semibold',
@@ -178,7 +182,7 @@ export function PricingView({ content }: { content: PricingContent }) {
           </div>
         </FadeInUpWrap>
 
-        <div className="mt-8 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
+        <div className="max-w-4xl mx-auto mt-8 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2">
           {content.plans.map((plan, index) => (
             <FadeInUpCard key={plan.id} index={index}>
               <PricingCard plan={plan} billingCycle={billingCycle} />
@@ -186,7 +190,7 @@ export function PricingView({ content }: { content: PricingContent }) {
           ))}
         </div>
 
-        <div className="mt-8 flex items-start gap-2">
+        <div className="max-w-4xl mx-auto mt-8 flex items-start gap-2">
           <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-accent" aria-hidden />
           <p className="text-[0.8125rem] text-muted-foreground">{content.footnote}</p>
         </div>

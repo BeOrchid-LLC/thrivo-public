@@ -52,6 +52,7 @@ export const FOOTER_LINKS = [
 export const LEGAL_NAV_LINKS = [
   { label: 'Privacy Policy', href: '/privacy-policy' },
   { label: 'Terms of Service', href: '/terms-of-service' },
+  { label: 'Cancellation Policy', href: '/cancellation-policy' },
   { label: 'Contact', href: '/contact' },
 ] as const;
 

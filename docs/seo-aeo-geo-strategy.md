@@ -47,15 +47,14 @@ re-run Lighthouse on every deploy that touches the page.
   client JS, so crawlers see it without rendering. Interactivity (pricing toggle,
   FAQ accordion, form) is isolated to small client components.
 - **`app/sitemap.ts`** → `/sitemap.xml`; **`app/robots.ts`** → `/robots.txt`
-  (references the sitemap). Add new routes (privacy, terms, etc.) to the sitemap
-  as they ship.
+  (references the sitemap). Keep public legal routes (privacy, terms, cancellation,
+  and contact) in the sitemap as they ship.
 - **Canonical URLs** via `metadata.alternates.canonical` + `metadataBase`
-  (`lib/seo.ts`). Set `NEXT_PUBLIC_SITE_URL` in production to the real origin.
+  (`lib/constants/texts.ts`). Set `NEXT_PUBLIC_LIVE_URL` in production to the real origin.
 - **Metadata API** (`app/layout.tsx`) — title template, description, keywords,
   Open Graph, Twitter `summary_large_image`, robots directives
   (`max-image-preview:large`, `max-snippet:-1`), `theme-color`.
-- **`app/opengraph-image.tsx`** — generated 1200×630 social card (next/og),
-  statically rendered. Reused for Twitter.
+- **`public/og-image.png`** — the social card used by the metadata configuration.
 - **`app/manifest.ts`** — PWA manifest; favicon served from `public/favicon.png` via
   `metadata.icons` (`lib/constants/texts.ts`).
 - **Core Web Vitals** — `next/font` (Inter, no layout shift), `next/image` with
@@ -72,7 +71,7 @@ re-run Lighthouse on every deploy that touches the page.
 - **Landmarks & a11y** — `header`/`nav`/`main`/`footer`, `aria-label`led
   sections, skip-to-content link, visible focus states, `alt` text on mockups.
   (A11y and SEO reinforce each other.)
-- **Keyword themes** (see `lib/seo.ts` `keywords`): the differentiator cluster —
+- **Keyword themes** (see `lib/constants/texts.ts` `SEO_DETAILS.keywords`): the differentiator cluster —
   _honest / transparent weight-loss app_, _free calorie counter no credit card_,
   _barcode food scanner_, _cancel subscription easily_. Don't chase "weight loss
   app" head term directly pre-launch; own the long-tail intent Thrivo is built for.
@@ -124,7 +123,7 @@ Thrivo?".
 ### Ongoing
 
 - **Mine real questions** — Search Console queries, People-Also-Ask, Reddit,
-  support tickets — and add them to the FAQ data (`lib/content.ts → faqSection`).
+  support tickets — and add them to the FAQ data (`lib/content/faq.ts`).
   The schema and UI update automatically.
 - **Answer-first content** — any future article should open with a 40–60 word
   direct answer, then expand. That block is what gets lifted into snippets/AI
@@ -145,7 +144,7 @@ correct facts.
 
 - **`public/llms.txt`** — a concise, factual, LLM-friendly summary of what Thrivo
   is, its key facts, plans, and what it is _not_. This is the GEO analog of a
-  sitemap: a clean, quotable brief. Keep it in sync with `lib/content.ts`.
+  sitemap: a clean, quotable brief. Keep it in sync with `lib/content/`.
 - **AI-crawler allowlist** (`app/robots.ts`) — explicitly welcomes GPTBot,
   OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended, Applebot-Extended,
   etc. (Flip an individual agent to `disallow` if policy ever requires it.)
@@ -184,16 +183,16 @@ sources. Priorities post-launch:
 
 ### Pre-launch checklist
 
-- [ ] Set `NEXT_PUBLIC_SITE_URL` to production origin (canonicals/OG/sitemap).
+- [ ] Set `NEXT_PUBLIC_LIVE_URL` to the approved production origin (canonicals/OG/sitemap).
 - [ ] Verify domain in Google Search Console + Bing Webmaster Tools.
 - [ ] Submit `/sitemap.xml`.
 - [ ] Rich Results Test on the live URL (FAQ + App eligible, no errors).
 - [ ] Lighthouse: SEO 100, a11y ≥95, CWV within NFR budgets.
 - [ ] Confirm `/robots.txt`, `/llms.txt`, `/manifest.webmanifest`,
-      `/opengraph-image` all serve 200.
+      `/og-image.png` all serve 200.
 - [ ] OG card renders correctly (LinkedIn Post Inspector, X card validator).
-- [ ] Wire the waitlist form to a real endpoint (currently stubbed — see
-      `components/marketing/CtaSection.tsx`, `TODO(waitlist)`).
+- [x] Wire the waitlist form to the backend lead-capture endpoint; it persists the lead and
+      queues an idempotent confirmation email. Validate it after each deployment.
 - [ ] Decide whether to keep `index:true` while pre-launch, or `noindex` until
       the page is final. (Recommended: index a real "launching soon" page so
       entity-building and waitlist capture start early.)
@@ -201,8 +200,8 @@ sources. Priorities post-launch:
 ### Launch-day
 
 - [ ] Remove any `noindex`; request indexing in Search Console.
-- [ ] Publish App Store / Play listings with identical facts; add store links to
-      `StoreButtons` (currently `#`).
+- [ ] Publish App Store / Play listings with identical facts; replace the intentional
+      `StoreButtons` placeholders with the real URLs.
 - [ ] Product Hunt / directory submissions; kick off PR on the transparency angle.
 
 ### Ongoing cadence
@@ -217,13 +216,13 @@ sources. Priorities post-launch:
 
 | Lever | File |
 |-------|------|
-| Site-wide SEO config, keywords, canonical origin | `lib/seo.ts` |
-| All copy, FAQ, plans (drives AEO answers + JSON-LD) | `lib/content.ts` |
+| Site-wide SEO config, keywords, canonical origin | `lib/constants/texts.ts` |
+| Section copy, FAQ, plans (drives AEO answers + JSON-LD) | `lib/content/` |
 | Structured data graph | `lib/jsonld.ts`, `components/seo/JsonLd.tsx` |
 | Metadata, OG/Twitter, robots directives | `app/layout.tsx` |
-| Sitemap / robots / manifest / OG image / favicon | `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`, `app/opengraph-image.tsx`, `public/favicon.png` |
+| Sitemap / robots / manifest / OG image / favicon | `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`, `public/og-image.png`, `public/favicon.png` |
 | GEO brief + AI-crawler policy | `public/llms.txt`, `app/robots.ts` |
 
-> Because copy and FAQ live in `lib/content.ts`, editing the FAQ updates the
+> Because copy and FAQ live in `lib/content/`, editing the FAQ updates the
 > visible accordion, the `FAQPage` schema, and (when synced) `llms.txt` — so
-> SEO, AEO, and GEO improve from one edit. Keep that file authoritative.
+> SEO, AEO, and GEO improve from one edit. Keep the section content files authoritative.

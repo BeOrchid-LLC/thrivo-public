@@ -9,7 +9,7 @@ import type { AppPreviewContent } from '@/lib/content/app-preview';
  * AppPreview (Figma node 144:668), presentational: pure function of `content`
  * so both the live-fetched path and the error-boundary fallback path render
  * identical markup. Composition follows the reference screenshot (phone
- * mockup left, copy right, centered as a pair) rather than Figma's raw node
+ * mockup left, copy right, anchored to the section rails) rather than Figma's raw node
  * tree, which has a couple of stray/duplicate containers that never render
  * (an empty container behind the phone, an off-canvas decorative layer) --
  * the decorative glow they'd otherwise produce is already baked into
@@ -22,8 +22,8 @@ export function AppPreviewView({ content }: { content: AppPreviewContent }) {
     <section className="relative overflow-hidden section-padding">
       <Image src={content.backgroundImageSrc} alt="" fill sizes="100vw" className="object-cover" />
 
-      <div className="regular-container relative z-10">
-        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-around lg:gap-x-[222px]">
+      <div className="regular-container px-4 relative z-10">
+        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-x-[222px]">
           <FadeInUpCard index={0} className="flex justify-center">
             <Image
               src={content.phoneImageSrc}

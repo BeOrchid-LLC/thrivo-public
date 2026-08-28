@@ -54,14 +54,13 @@ function ValuePropCard({ icon, title, body }: ValuePropCardData) {
 /**
  * ValueProp (Figma node 144:535), presentational: pure function of `content`
  * so both the live-fetched path and the error-boundary fallback path render
- * identical markup. Both columns are capped at the design's 391px so they
- * read as a centered pair rather than stretching across the full section
- * width; outer section padding/max-width come from the shared SectionContainer.
+ * identical markup. Both columns keep their readable 391px content width while
+ * the pair is anchored to the shared section rails on large screens.
  */
 export function ValuePropView({ content }: { content: ValuePropContent }) {
   return (
-    <SectionContainer className="overflow-hidden">
-      <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:justify-around">
+    <SectionContainer className="overflow-hidden" containerClassName="px-4">
+      <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:justify-between">
         <div className="w-full max-w-[391px]">
           <FadeInUpWrap>
             <SectionHeader
