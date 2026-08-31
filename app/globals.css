@@ -9,13 +9,13 @@
  */
 @layer base {
   :root {
-    /* Primary - Thrivo green (#27AE60) */
-    --primary: 145 63% 42%;
+    /* Primary - Thrivo green (#09823C) */
+    --primary: 145 87% 27%;
     --primary-foreground: 0 0% 100%;
-    /* Gradient stop (#34C975) */
-    --primary-light: 146 59% 50%;
-    /* Pressed/eyebrow green (#09823C) */
-    --primary-active: 145 87% 27%;
+    /* Gradient stop (#1EB85E) */
+    --primary-light: 145 72% 42%;
+    /* Pressed/eyebrow green (#05662D) */
+    --primary-active: 145 91% 21%;
 
     /* Secondary - quiet surface pairing (shadcn convention; no distinct brand secondary) */
     --secondary: 216 29% 97%;
@@ -49,7 +49,7 @@
     /* Borders & inputs (#EDF0F3) */
     --border: 210 20% 94%;
     --input: 210 20% 94%;
-    --ring: 145 63% 42%;
+    --ring: 145 87% 27%;
 
     /* Destructive */
     --destructive: 0 72% 51%;
@@ -65,14 +65,14 @@
     --shadow-sm: 0 2px 8px -2px hsl(240 28% 14% / 0.06);
     --shadow-md: 0 8px 24px -8px hsl(240 28% 14% / 0.1);
     --shadow-lg: 0 16px 48px -12px hsl(240 28% 14% / 0.15);
-    --shadow-glow: 0 4px 10px hsl(145 63% 42% / 0.3);
+    --shadow-glow: 0 4px 10px hsl(var(--primary) / 0.3);
     --shadow-card: 0 4px 20px -4px hsl(240 28% 14% / 0.08);
     --shadow-card-hover: 0 12px 40px -8px hsl(240 28% 14% / 0.15);
     /* Tight, barely-there lift for flat list-style cards (ValueProp) */
     --shadow-xs: 0 1px 1.5px rgb(0 0 0 / 0.1), 0 1px 1px rgb(0 0 0 / 0.1);
 
     /* Gradients */
-    --gradient-heading: linear-gradient(169deg, hsl(146 59% 50%) 0%, hsl(145 63% 42%) 100%);
+    --gradient-heading: linear-gradient(169deg, hsl(var(--primary-light)) 0%, hsl(var(--primary)) 100%);
     --gradient-tint: linear-gradient(174deg, hsl(150 53% 94%) 0%, hsl(150 48% 89%) 100%);
     --gradient-tint-tile: linear-gradient(135deg, hsl(150 53% 94%) 0%, hsl(150 48% 89%) 100%);
     /* Subtler full-width band wash (TrustBar) */
@@ -88,24 +88,24 @@
     /* Premium plan card fill (Pricing, node 144:739) */
     --gradient-premium-card: linear-gradient(
       137deg,
-      hsl(146 59% 50%) 6%,
-      hsl(145 63% 42%) 50%,
-      hsl(145 87% 27%) 94%
+      hsl(var(--primary-light)) 6%,
+      hsl(var(--primary)) 50%,
+      hsl(var(--primary-active)) 94%
     );
     /* Premium card fill when annual billing is selected (Pricing, node 155:1430) --
        ink fading into brand green instead of the flat monthly green */
     --gradient-premium-card-annual: linear-gradient(
       128deg,
       hsl(240 28% 14%) 6%,
-      rgb(45, 91, 74) 50%,
-      hsl(145 63% 42%) 94%
+      hsl(var(--primary)) 50%,
+      hsl(var(--primary-active)) 94%
     );
     --gradient-glow: radial-gradient(
       circle,
-      hsl(145 63% 42% / 1) 0%,
-      hsl(146 64% 31% / 0.75) 17.5%,
-      hsl(146 63% 21% / 0.5) 35%,
-      hsl(145 63% 11% / 0.25) 52.5%,
+      hsl(var(--primary) / 1) 0%,
+      hsl(var(--primary-light) / 0.75) 17.5%,
+      hsl(var(--primary) / 0.5) 35%,
+      hsl(var(--primary-active) / 0.25) 52.5%,
       transparent 70%
     );
 
@@ -175,6 +175,37 @@
 
   .regular-container {
     @apply w-full max-w-7xl 2xl:max-w-[1300px] 3xl:max-w-[1500px] mx-auto px-4 sm:px-8 md:px-12 lg:px-8 xl:px-10 2xl:px-16 3xl:px-20;
+  }
+
+  /* Marketing/header rail: keep the accepted wide-desktop gutters while
+     giving tablet and compact-desktop layouts enough breathing room. */
+  .public-container {
+    @apply w-full max-w-7xl mx-auto px-4;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .public-container {
+      padding-inline: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1399px) {
+    .public-container {
+      max-width: 1200px;
+      padding-inline: 6rem;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .public-container {
+      max-width: 1300px;
+    }
+  }
+
+  @media (min-width: 1700px) {
+    .public-container {
+      max-width: 1500px;
+    }
   }
 
   .section-padding {
@@ -446,10 +477,10 @@
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 20px hsl(145 63% 42% / 0.4);
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
   }
 
   50% {
-    box-shadow: 0 0 40px hsl(145 63% 42% / 0.6);
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
   }
 }

@@ -31,7 +31,7 @@ export const Header = () => {
     <header
       className="fixed top-0 right-0 left-0 z-50 border-b border-border bg-background/90 backdrop-blur-md"
       style={{ height: 'var(--header-height)' }}>
-      <div className="regular-container mx-auto h-full px-4">
+      <div className="public-container mx-auto h-full">
         <div className="flex h-full items-center justify-between">
           <Logo textClassName="text-base uppercase tracking-normal" />
 

@@ -4,11 +4,7 @@ import { SectionContainer } from '@/components/general/SectionContainer';
 /** Loading placeholder shown while `getPricingContent()` is pending; mirrors PricingView's shell so there's no layout shift when real content swaps in. */
 export function PricingSkeleton() {
   return (
-    <SectionContainer
-      id="pricing"
-      className="scroll-mt-header"
-      background="muted"
-      containerClassName="px-4">
+    <SectionContainer id="pricing" className="scroll-mt-header" background="muted">
       <div aria-busy="true" aria-label="Loading pricing">
         <Skeleton className="h-4 w-16 rounded-full" />
         <Skeleton className="mt-4 h-[76px] w-full max-w-[576px]" />

@@ -34,13 +34,13 @@ export function HeroView({ content }: { content: HeroContent }) {
         className="object-cover"
       />
 
-      <div className="regular-container px-4 relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
-        <div className="max-w-[448px]">
+      <div className="public-container relative z-10 grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-12 lg:grid-cols-2 lg:gap-8">
+        <div className="max-w-full md:max-w-[360px] lg:max-w-[448px] sm:mx-auto md:ml-0">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0 }}>
-            <EyebrowBadge icon={<BadgeCheck className="size-3" aria-hidden />} withDot>
+            <EyebrowBadge icon={<BadgeCheck className="size-2" aria-hidden />} withDot>
               {content.eyebrow}
             </EyebrowBadge>
           </motion.div>
@@ -50,12 +50,8 @@ export function HeroView({ content }: { content: HeroContent }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-display mt-6">
-            {content.headingLine1}
-            <br />
-            <span className="gradient-text">{content.headingHighlight}</span>{' '}
-            {content.headingLine2Rest}
-            <br />
-            {content.headingLine3}
+            {content.headingLine1} <span className="gradient-text">{content.headingHighlight}</span>{' '}
+            {content.headingLine2Rest} {content.headingLine3}
           </motion.h1>
 
           <motion.p
@@ -86,7 +82,7 @@ export function HeroView({ content }: { content: HeroContent }) {
           initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center lg:justify-end">
+          className="w-full md:w-fit lg:w-auto flex justify-center lg:justify-end">
           <Image
             src={content.dashboardImageSrc}
             alt={content.dashboardAlt}

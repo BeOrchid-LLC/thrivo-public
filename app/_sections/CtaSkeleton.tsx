@@ -7,7 +7,6 @@ export function CtaSkeleton() {
     <SectionContainer
       id="get-started"
       className="scroll-mt-header"
-      containerClassName="px-4"
       backgroundImageSrc="/images/cta-bg.png">
       <div
         className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between"

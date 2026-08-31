@@ -4,7 +4,7 @@ import { SectionContainer } from '@/components/general/SectionContainer';
 /** Loading placeholder shown while `getValuePropContent()` is pending; mirrors ValuePropView's shell so there's no layout shift when real content swaps in. */
 export function ValuePropSkeleton() {
   return (
-    <SectionContainer containerClassName="px-4">
+    <SectionContainer>
       <div
         className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:justify-between"
         aria-busy="true"
