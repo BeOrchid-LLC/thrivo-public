@@ -23,7 +23,7 @@ const HEIGHT = 630;
 
 const INK = '#1A1A2E';
 const MUTED = '#737373';
-const GREEN = '#27AE60';
+const GREEN = '#09823C';
 
 /**
  * satori needs a static-weight TTF/OTF/WOFF font buffer — Google Fonts only

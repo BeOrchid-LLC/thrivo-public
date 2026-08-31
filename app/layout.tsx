@@ -39,14 +39,14 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   colorScheme: 'only light',
-  themeColor: '#27AE60',
+  themeColor: '#09823C',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={inter.variable}>
       <body className="antialiased overflow-x-hidden">
-        <NextTopLoader color="hsl(145 63% 42%)" height={3} showSpinner={false} />
+        <NextTopLoader color="#09823C" height={3} showSpinner={false} />
         <LoadAnimationScreenDynamic />
         <Providers>{children}</Providers>
       </body>
