@@ -177,6 +177,37 @@
     @apply w-full max-w-7xl 2xl:max-w-[1300px] 3xl:max-w-[1500px] mx-auto px-4 sm:px-8 md:px-12 lg:px-8 xl:px-10 2xl:px-16 3xl:px-20;
   }
 
+  /* Marketing/header rail: keep the accepted wide-desktop gutters while
+     giving tablet and compact-desktop layouts enough breathing room. */
+  .public-container {
+    @apply w-full max-w-7xl mx-auto px-4;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .public-container {
+      padding-inline: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1399px) {
+    .public-container {
+      max-width: 1200px;
+      padding-inline: 6rem;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .public-container {
+      max-width: 1300px;
+    }
+  }
+
+  @media (min-width: 1700px) {
+    .public-container {
+      max-width: 1500px;
+    }
+  }
+
   .section-padding {
     @apply py-16 md:py-24 lg:py-[6.5rem];
   }

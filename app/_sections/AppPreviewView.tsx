@@ -22,7 +22,7 @@ export function AppPreviewView({ content }: { content: AppPreviewContent }) {
     <section className="relative overflow-hidden section-padding">
       <Image src={content.backgroundImageSrc} alt="" fill sizes="100vw" className="object-cover" />
 
-      <div className="regular-container px-4 relative z-10">
+      <div className="public-container relative z-10">
         <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-x-[222px]">
           <FadeInUpCard index={0} className="flex justify-center">
             <Image

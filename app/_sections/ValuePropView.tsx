@@ -59,7 +59,7 @@ function ValuePropCard({ icon, title, body }: ValuePropCardData) {
  */
 export function ValuePropView({ content }: { content: ValuePropContent }) {
   return (
-    <SectionContainer className="overflow-hidden" containerClassName="px-4">
+    <SectionContainer className="overflow-hidden">
       <div className="flex flex-col items-center gap-16 lg:flex-row lg:items-start lg:justify-between">
         <div className="w-full max-w-[391px]">
           <FadeInUpWrap>

@@ -31,10 +31,7 @@ function FaqAccordionItem({ value, question, answer }: { value: string } & FaqQu
  */
 export function FaqView({ content }: { content: FaqContent }) {
   return (
-    <SectionContainer
-      id="faq"
-      className="scroll-mt-header overflow-hidden"
-      containerClassName="px-4">
+    <SectionContainer id="faq" className="scroll-mt-header overflow-hidden">
       <JsonLd data={faqJsonLd(content.questions)} />
 
       <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">

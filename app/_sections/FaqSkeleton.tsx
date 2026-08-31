@@ -4,7 +4,7 @@ import { SectionContainer } from '@/components/general/SectionContainer';
 /** Loading placeholder shown while `getFaqContent()` is pending; mirrors FaqView's shell so there's no layout shift when real content swaps in. */
 export function FaqSkeleton() {
   return (
-    <SectionContainer id="faq" className="scroll-mt-header" containerClassName="px-4">
+    <SectionContainer id="faq" className="scroll-mt-header">
       <div
         className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between"
         aria-busy="true"

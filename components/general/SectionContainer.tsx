@@ -56,7 +56,7 @@ export const SectionContainer = ({
       )}
       <div
         className={cn(
-          customContainer ? 'container-custom' : 'regular-container',
+          customContainer ? 'container-custom' : 'public-container',
           containerClassName
         )}>
         {children}
