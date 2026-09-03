@@ -1,4 +1,4 @@
-import { liveUrl } from '@/lib/config/env';
+import { canonicalUrl } from '@/lib/config/env';
 
 export const SITE_NAME = 'Thrivo';
 
@@ -11,9 +11,9 @@ export const SEO_DETAILS = {
     'Thrivo is an honest weight loss app: barcode food scanning across 160+ countries, macro and water tracking, progress charts, transparent pricing at $14.99/month, and a cancel button that actually works.',
   ogDesc:
     'Honest pricing. Real food logging. A cancel button that works. Thrivo helps you lose weight without the nonsense — free tier available, no credit card required.',
-  metadataBase: new URL(liveUrl),
-  alternates: { canonical: liveUrl },
-  image: `${liveUrl}/og-image.png`,
+  metadataBase: new URL(canonicalUrl),
+  alternates: { canonical: canonicalUrl },
+  image: `${canonicalUrl}/og-image.png`,
   icons: '/favicon.png',
   robots: {
     index: true,

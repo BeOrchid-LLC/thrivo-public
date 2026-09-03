@@ -1,4 +1,4 @@
-import { liveUrl } from '@/lib/config/env';
+import { canonicalUrl } from '@/lib/config/env';
 import { SEO_DETAILS, SITE_NAME } from '@/lib/constants/texts';
 
 type JsonLdObject = Record<string, unknown>;
@@ -9,8 +9,8 @@ export function organizationJsonLd(): JsonLdObject {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'BeOrchid LLC',
-    url: liveUrl,
-    logo: `${liveUrl}/favicon.png`,
+    url: canonicalUrl,
+    logo: `${canonicalUrl}/favicon.png`,
   };
 }
 
@@ -20,7 +20,7 @@ export function websiteJsonLd(): JsonLdObject {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
-    url: liveUrl,
+    url: canonicalUrl,
     description: SEO_DETAILS.description,
   };
 }

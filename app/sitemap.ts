@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { liveUrl } from '@/lib/config/env';
+import { canonicalUrl } from '@/lib/config/env';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const publicRoutes = [
@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return publicRoutes.map(({ path, priority }) => ({
-    url: `${liveUrl}${path}`,
+    url: `${canonicalUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority,

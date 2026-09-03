@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { liveUrl } from '@/lib/config/env';
+import { canonicalUrl } from '@/lib/config/env';
 
 /**
  * AI-crawler allowlist for GEO (generative engine optimization) — explicitly
@@ -33,6 +33,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: `${liveUrl}/sitemap.xml`,
+    sitemap: `${canonicalUrl}/sitemap.xml`,
   };
 }
