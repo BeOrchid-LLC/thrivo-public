@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/terms-of-service', priority: 0.5 },
     { path: '/cancellation-policy', priority: 0.5 },
     { path: '/contact', priority: 0.5 },
+    { path: '/delete-account', priority: 0.5 },
   ];
 
   return publicRoutes.map(({ path, priority }) => ({

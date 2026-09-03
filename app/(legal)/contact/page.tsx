@@ -52,9 +52,9 @@ export default function ContactPage() {
               details.
             </p>
             <a
-              href="mailto:privacy@thrivo.fit"
+              href="mailto:subscriptions@beorchid.com"
               className="mt-3 inline-block text-sm font-semibold text-primary-active hover:underline">
-              privacy@thrivo.fit
+              subscriptions@beorchid.com
             </a>
           </div>
 
