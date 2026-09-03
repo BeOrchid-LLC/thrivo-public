@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { SectionHeader } from '@/components/general/SectionHeader';
 import { FadeInUpCard } from '@/components/general/MotionContainers';
 import type { AppPreviewContent } from '@/lib/content/app-preview';
@@ -40,6 +41,17 @@ export function AppPreviewView({ content }: { content: AppPreviewContent }) {
               heading={content.heading}
               subtext={content.paragraph}
             />
+            <div className="mt-8 border-t border-border pt-6">
+              <p className="text-sm leading-[1.5] font-semibold text-foreground">
+                {content.accountPrivacyTitle}
+              </p>
+              <p className="text-card-body mt-1">{content.accountPrivacyBody}</p>
+              <Link
+                href="/privacy-policy"
+                className="mt-2 inline-block text-sm font-semibold text-primary underline underline-offset-4">
+                Read our Privacy Policy
+              </Link>
+            </div>
           </FadeInUpCard>
         </div>
       </div>

@@ -45,6 +45,11 @@ export const FAQ_CONTENT_FALLBACK: FaqContent = {
         "Thrivo doesn't use human coaches. You get daily evidence-based nudges and progress insights generated from your own data, available instantly any time of day.",
     },
     {
+      question: 'Why does Thrivo offer Google Sign-In?',
+      answer:
+        'Google Sign-In is used only to create and secure your Thrivo account. Thrivo does not access Gmail, Drive, Calendar, or other Google services. You can also create an account with email.',
+    },
+    {
       question: 'What happens at the end of the 14-day trial?',
       answer:
         "Your card is charged the plan price you selected at signup, and we show the exact charge date upfront. Cancel before the trial ends and you won't be charged.",

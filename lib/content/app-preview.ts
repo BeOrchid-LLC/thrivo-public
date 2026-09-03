@@ -5,6 +5,8 @@ export interface AppPreviewContent {
   eyebrow: string;
   heading: string;
   paragraph: string;
+  accountPrivacyTitle: string;
+  accountPrivacyBody: string;
   backgroundImageSrc: string;
   phoneImageSrc: string;
   phoneImageAlt: string;
@@ -21,6 +23,9 @@ export const APP_PREVIEW_CONTENT_FALLBACK: AppPreviewContent = {
   heading: 'Outcomes, not gimmicks.',
   paragraph:
     'Research shows that consistently tracking what you eat leads to better choices over time. Thrivo helps you build that habit — simply, consistently, and without any hassle.',
+  accountPrivacyTitle: 'Your account, your data',
+  accountPrivacyBody:
+    'Create your Thrivo account with email or Google. Google Sign-In is used only to create and secure your account; Thrivo does not access Gmail, Drive, Calendar, or other Google services.',
   backgroundImageSrc: '/images/progress-bg.png',
   phoneImageSrc: '/images/mobile-progress-tracker.png',
   phoneImageAlt:
