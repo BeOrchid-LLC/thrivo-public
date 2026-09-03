@@ -19,6 +19,13 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        source: '/delete-account',
+        headers: [
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'Cache-Control', value: 'no-store, max-age=0' },
+        ],
+      },
+      {
         source: '/:path*',
         headers: [
           { key: 'X-Frame-Options', value: 'DENY' },

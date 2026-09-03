@@ -46,6 +46,7 @@ export const FOOTER_LINKS = [
   { label: 'Terms of Service', href: '/terms-of-service' },
   { label: 'Cancellation Policy', href: '/cancellation-policy' },
   { label: 'Contact', href: '/contact' },
+  { label: 'Delete account', href: '/delete-account' },
 ] as const;
 
 /** Nav links for the (legal) route group's header — swaps in for NAV_LINKS on those pages. */
@@ -54,6 +55,7 @@ export const LEGAL_NAV_LINKS = [
   { label: 'Terms of Service', href: '/terms-of-service' },
   { label: 'Cancellation Policy', href: '/cancellation-policy' },
   { label: 'Contact', href: '/contact' },
+  { label: 'Delete account', href: '/delete-account' },
 ] as const;
 
 export const SOCIAL_LINKS = [

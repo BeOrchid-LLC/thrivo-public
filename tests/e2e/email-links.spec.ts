@@ -39,4 +39,32 @@ test.describe('email-link destinations @smoke', () => {
     ).toBeVisible();
     await expect(page.getByRole('heading', { level: 1, name: '404', exact: true })).toHaveCount(0);
   });
+
+  test('/delete-account exposes the public deletion request path', async ({ page }) => {
+    const response = await page.goto('/delete-account');
+
+    expect(response?.status()).toBe(200);
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Delete your Thrivo account' })
+    ).toBeVisible();
+    await expect(page.getByLabel('Account email')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Send confirmation email' })).toBeVisible();
+    await expect(page.getByText('subscriptions@beorchid.com')).toBeVisible();
+  });
+
+  test('/delete-account token load does not mutate without confirmation', async ({ page }) => {
+    const requests: string[] = [];
+    page.on('request', request => {
+      if (request.url().includes('/api/v1/account-deletion-requests'))
+        requests.push(request.method());
+    });
+
+    const response = await page.goto('/delete-account?token=test-token-without-confirmation');
+
+    expect(response?.status()).toBe(200);
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Confirm permanent deletion' })
+    ).toBeVisible();
+    expect(requests).toEqual([]);
+  });
 });
