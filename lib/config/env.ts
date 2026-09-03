@@ -25,3 +25,10 @@ export const env = envSchema.parse({
 
 export const liveUrl = env.NEXT_PUBLIC_LIVE_URL;
 export const apiUrl = env.NEXT_PUBLIC_API_URL;
+
+/**
+ * SEO identity must always use the verified public domain. A preview build
+ * may still set NEXT_PUBLIC_LIVE_URL for runtime/CSP concerns, but that host
+ * must not leak into canonical, Open Graph, sitemap, or structured-data URLs.
+ */
+export const canonicalUrl = 'https://thrivo.fit';
