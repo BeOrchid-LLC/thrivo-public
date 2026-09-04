@@ -26,7 +26,8 @@ export const HERO_CONTENT_FALLBACK: HeroContent = {
   headingHighlight: 'without',
   headingLine2Rest: 'the',
   headingLine3: 'nonsense.',
-  paragraph: 'Simple tools to help you stay consistent — without the overwhelm.',
+  paragraph:
+    'Thrivo is a mobile weight-loss app that helps you build healthier eating habits by scanning barcodes, logging meals, and tracking calories, macros, water, and weight progress.',
   finePrint: 'Free tier available — no credit card required.',
   backgroundImageSrc: '/images/public-hero-bg.png',
   dashboardImageSrc: '/images/mobile-dashboard.png',
