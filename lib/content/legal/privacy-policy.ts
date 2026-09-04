@@ -121,6 +121,24 @@ export const PRIVACY_POLICY_CONTENT: LegalDocContent = {
       ],
     },
     {
+      id: 'google-user-data',
+      heading: 'Google Sign-In and Google user data',
+      blocks: [
+        {
+          type: 'paragraph',
+          text: 'When you choose Sign in with Google, Thrivo receives the basic identity information needed to create or link your account, such as your Google account email address, name, and a unique provider account identifier. We may also receive a profile image if Google provides one.',
+        },
+        {
+          type: 'paragraph',
+          text: 'We use this information only to authenticate you, create or link your Thrivo account, maintain secure sessions, prevent account abuse, and display your account profile. We do not request or access Gmail, Google Drive, Google Calendar, contacts, or other unrelated Google services.',
+        },
+        {
+          type: 'paragraph',
+          text: 'Google Sign-In identity data is processed by our authentication provider and Thrivo, retained while your account is active, and deleted or anonymized under our account-deletion and data-retention practices when you delete your account. We do not sell this data, use it for advertising, or use it to train generalized artificial-intelligence or machine-learning models.',
+        },
+      ],
+    },
+    {
       id: 'health-data',
       heading: 'Health data',
       blocks: [
