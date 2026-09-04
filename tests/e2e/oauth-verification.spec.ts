@@ -38,6 +38,7 @@ test.describe('Google OAuth verification public surfaces', () => {
       expect(html).toContain('Google Sign-In and Google user data');
       expect(html).toContain('unique provider account identifier');
       expect(html).toContain('We do not request or access Gmail, Google Drive, Google Calendar');
+      expect(html).toContain('shared with Clerk, our authentication provider');
       expect(html).toContain('We do not sell this data, use it for advertising');
       expect(html).not.toMatch(/cf-chl-|Just a moment\.\.\.|Enable JavaScript and cookies/i);
     });

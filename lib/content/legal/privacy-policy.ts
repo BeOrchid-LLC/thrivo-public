@@ -113,6 +113,7 @@ export const PRIVACY_POLICY_CONTENT: LegalDocContent = {
             { term: 'RevenueCat', text: 'subscription and in-app purchase management' },
             { term: 'Resend', text: 'transactional email delivery' },
             { term: 'Google', text: 'optional "Sign in with Google" authentication' },
+            { term: 'Clerk', text: 'authentication and account session management' },
             { term: 'Sentry', text: 'crash and error reporting' },
             { term: 'PostHog', text: 'product analytics' },
             { term: 'Cloudflare R2', text: 'object storage for uploaded images (optional)' },
@@ -134,7 +135,7 @@ export const PRIVACY_POLICY_CONTENT: LegalDocContent = {
         },
         {
           type: 'paragraph',
-          text: 'Google Sign-In identity data is processed by our authentication provider and Thrivo, retained while your account is active, and deleted or anonymized under our account-deletion and data-retention practices when you delete your account. We do not sell this data, use it for advertising, or use it to train generalized artificial-intelligence or machine-learning models.',
+          text: 'Google Sign-In identity data is shared with Clerk, our authentication provider, and processed by Clerk and Thrivo to provide authentication and account session management. It is retained while your account is active, and deleted or anonymized under our account-deletion and data-retention practices when you delete your account. We do not share this data with PostHog, Sentry, RevenueCat, Resend, or other third parties except as needed to provide or secure Thrivo, comply with applicable law, or complete a permitted business transfer. We do not sell this data, use it for advertising, or use it to train generalized artificial-intelligence or machine-learning models.',
         },
       ],
     },
